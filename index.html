@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
 
@@ -11,105 +12,682 @@
   <meta name="description"
         content="안양 푸드뱅크 공식 홈페이지입니다. 식품기부, 이용안내, 자원봉사 및 지역사회 나눔 활동을 안내합니다.">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, "Noto Sans KR", sans-serif;
-      color: #262626;
-      background: #faf8f3;
-    }
-
-    main {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 30px;
-      text-align: center;
-    }
-
-    .test-box {
-      width: 100%;
-      max-width: 700px;
-      padding: 60px 30px;
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 10px 40px rgba(0,0,0,.06);
-    }
-
-    .label {
-      color: #f79400;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 2px;
-    }
-
-    h1 {
-      margin: 15px 0;
-      font-size: 42px;
-    }
-
-    p {
-      margin: 0;
-      color: #666;
-      font-size: 18px;
-      line-height: 1.7;
-    }
-
-    .success {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 12px 22px;
-      border-radius: 30px;
-      background: #285a35;
-      color: #fff;
-      font-weight: 700;
-    }
-
-    @media (max-width: 600px) {
-      .test-box {
-        padding: 45px 20px;
-      }
-
-      h1 {
-        font-size: 32px;
-      }
-
-      p {
-        font-size: 16px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 
 <body>
 
-<main>
-  <section class="test-box">
+  <!-- =========================
+       HEADER
+  ========================== -->
 
-    <div class="label">
-      ANYANG FOOD BANK
+  <header class="site-header">
+
+    <div class="header-inner">
+
+      <a href="#home"
+         class="brand"
+         aria-label="안양 푸드뱅크 홈">
+
+        <img src="logo.png"
+             class="site-logo"
+             alt="안양 푸드뱅크 로고">
+
+        <div class="brand-text">
+          <strong>안양 푸드뱅크</strong>
+          <span>ANYANG FOOD BANK</span>
+        </div>
+
+      </a>
+
+
+      <nav class="desktop-nav"
+           aria-label="주 메뉴">
+
+        <a href="#about">기관소개</a>
+        <a href="#business">주요사업</a>
+        <a href="#guide">이용안내</a>
+        <a href="#donation">기부안내</a>
+        <a href="#volunteer">자원봉사</a>
+        <a href="#news">소식</a>
+        <a href="#contact">오시는 길</a>
+
+      </nav>
+
+
+      <button id="menuButton"
+              class="menu-button"
+              type="button"
+              aria-label="메뉴 열기"
+              aria-expanded="false">
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </button>
+
     </div>
 
-    <h1>
-      안양 푸드뱅크
-    </h1>
 
-    <p>
-      당신의 작은 나눔이 따뜻한 안양을 만듭니다.<br>
-      공식 홈페이지를 준비하고 있습니다.
-    </p>
+    <nav id="mobileNav"
+         class="mobile-nav"
+         aria-label="모바일 주 메뉴">
 
-    <div class="success">
-      GitHub Pages 테스트
+      <a href="#about">기관소개</a>
+      <a href="#business">주요사업</a>
+      <a href="#guide">이용안내</a>
+      <a href="#donation">기부안내</a>
+      <a href="#volunteer">자원봉사</a>
+      <a href="#news">소식</a>
+      <a href="#contact">오시는 길</a>
+
+    </nav>
+
+  </header>
+
+
+  <main id="home">
+
+
+    <!-- =========================
+         HERO - PC/TABLET
+    ========================== -->
+
+    <section class="hero">
+
+      <div class="desktop-hero">
+
+        <img src="main-banner.png"
+             class="main-banner"
+             alt="당신의 작은 나눔이 따뜻한 안양을 만듭니다. 식품기부로 따뜻한 안양을 만들어주세요.">
+
+      </div>
+
+
+      <!-- MOBILE HERO -->
+
+      <div class="mobile-hero">
+
+        <div class="mobile-hero-inner">
+
+          <p class="hero-small">
+            ANYANG FOOD BANK
+          </p>
+
+          <h1>
+            당신의 작은 나눔이<br>
+            따뜻한 안양을 만듭니다.
+          </h1>
+
+          <p class="hero-description">
+            식품기부로 따뜻한 안양을 만들어주세요.
+          </p>
+
+          <div class="hero-buttons">
+
+            <a href="#donation"
+               class="button button-primary">
+              기부 안내
+            </a>
+
+            <a href="#guide"
+               class="button button-outline">
+              이용 안내
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         QUICK MENU
+    ========================== -->
+
+    <section class="quick-section"
+             id="guide">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span>ANYANG FOOD BANK</span>
+
+          <h2>
+            따뜻한 나눔에 함께해 주세요
+          </h2>
+
+          <p>
+            필요한 정보를 쉽고 빠르게 확인하실 수 있습니다.
+          </p>
+
+        </div>
+
+
+        <div class="quick-grid">
+
+          <a href="#guide"
+             class="quick-card">
+
+            <div class="quick-icon">
+              01
+            </div>
+
+            <h3>이용안내</h3>
+
+            <p>
+              푸드뱅크 이용 대상과 이용 방법을
+              안내합니다.
+            </p>
+
+            <strong>
+              자세히 보기 →
+            </strong>
+
+          </a>
+
+
+          <a href="#donation"
+             class="quick-card">
+
+            <div class="quick-icon">
+              02
+            </div>
+
+            <h3>기부안내</h3>
+
+            <p>
+              식품과 생활용품으로 따뜻한
+              나눔에 참여하실 수 있습니다.
+            </p>
+
+            <strong>
+              자세히 보기 →
+            </strong>
+
+          </a>
+
+
+          <a href="#volunteer"
+             class="quick-card">
+
+            <div class="quick-icon">
+              03
+            </div>
+
+            <h3>자원봉사</h3>
+
+            <p>
+              지역사회 나눔 활동에 함께
+              참여하실 수 있습니다.
+            </p>
+
+            <strong>
+              자세히 보기 →
+            </strong>
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         ABOUT
+    ========================== -->
+
+    <section class="about-section"
+             id="about">
+
+      <div class="container about-grid">
+
+        <div>
+
+          <span class="section-label">
+            ABOUT US
+          </span>
+
+          <h2>
+            나눔으로 이어지는<br>
+            따뜻한 안양
+          </h2>
+
+        </div>
+
+
+        <div class="about-content">
+
+          <p>
+            안양 푸드뱅크는 기부받은 식품과
+            생활용품을 도움이 필요한 이웃에게
+            전달하여 지역사회 나눔문화 확산에
+            함께하고 있습니다.
+          </p>
+
+          <p>
+            소중한 기부가 필요한 곳에 전달될 수
+            있도록 지역사회와 함께 지속적인
+            나눔 활동을 이어가겠습니다.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         BUSINESS
+    ========================== -->
+
+    <section class="business-section"
+             id="business">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span>OUR BUSINESS</span>
+
+          <h2>주요 사업</h2>
+
+          <p>
+            안양 푸드뱅크의 주요 나눔 활동을 소개합니다.
+          </p>
+
+        </div>
+
+
+        <div class="business-grid">
+
+          <article class="business-card">
+
+            <div class="business-number">
+              01
+            </div>
+
+            <h3>
+              기부식품 제공사업
+            </h3>
+
+            <p>
+              기업과 개인으로부터 기부받은
+              식품 및 생활용품을 필요한
+              이웃에게 전달합니다.
+            </p>
+
+          </article>
+
+
+          <article class="business-card">
+
+            <div class="business-number">
+              02
+            </div>
+
+            <h3>
+              G-푸드드림
+            </h3>
+
+            <p>
+              지역 내 취약계층의 안정적인
+              생활을 지원하기 위한 나눔사업을
+              운영합니다.
+            </p>
+
+          </article>
+
+
+          <article class="business-card">
+
+            <div class="business-number">
+              03
+            </div>
+
+            <h3>
+              지역사회 나눔
+            </h3>
+
+            <p>
+              지역 기관·기업·자원봉사자와 함께
+              다양한 나눔 활동을 진행합니다.
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         DONATION
+    ========================== -->
+
+    <section class="donation-section"
+             id="donation">
+
+      <div class="container donation-inner">
+
+        <div>
+
+          <span>
+            SHARE WITH US
+          </span>
+
+          <h2>
+            여러분의 나눔이<br>
+            누군가에게 큰 힘이 됩니다.
+          </h2>
+
+          <p>
+            식품, 생활용품 등 다양한 방법으로
+            안양 푸드뱅크와 함께하실 수 있습니다.
+          </p>
+
+        </div>
+
+
+        <a href="#contact"
+           class="button donation-button">
+
+          기부 문의하기
+
+        </a>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         VOLUNTEER
+    ========================== -->
+
+    <section class="volunteer-section"
+             id="volunteer">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span>VOLUNTEER</span>
+
+          <h2>자원봉사 안내</h2>
+
+          <p>
+            따뜻한 나눔의 현장에 함께해 주세요.
+          </p>
+
+        </div>
+
+
+        <div class="volunteer-box">
+
+          <div class="volunteer-item">
+
+            <strong>01</strong>
+
+            <h3>함께하는 봉사</h3>
+
+            <p>
+              기부물품 정리, 배분 지원 등
+              다양한 활동에 참여할 수 있습니다.
+            </p>
+
+          </div>
+
+
+          <div class="volunteer-item">
+
+            <strong>02</strong>
+
+            <h3>지역사회 나눔</h3>
+
+            <p>
+              봉사를 통해 이웃과 나눔의
+              가치를 함께 만들어갑니다.
+            </p>
+
+          </div>
+
+
+          <div class="volunteer-item">
+
+            <strong>03</strong>
+
+            <h3>봉사 문의</h3>
+
+            <p>
+              참여를 원하시는 경우
+              안양 푸드뱅크로 문의해 주세요.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         NEWS
+    ========================== -->
+
+    <section class="news-section"
+             id="news">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span>NEWS</span>
+
+          <h2>
+            안양 푸드뱅크 소식
+          </h2>
+
+          <p>
+            공지사항과 활동소식을 전해드립니다.
+          </p>
+
+        </div>
+
+
+        <div class="news-grid">
+
+          <article class="news-card">
+
+            <div class="news-type">
+              공지사항
+            </div>
+
+            <h3>
+              홈페이지를 준비하고 있습니다.
+            </h3>
+
+            <p>
+              다음 단계에서 Google Sheets와
+              연결하여 공지사항을 자동으로
+              표시할 예정입니다.
+            </p>
+
+          </article>
+
+
+          <article class="news-card">
+
+            <div class="news-type">
+              활동소식
+            </div>
+
+            <h3>
+              따뜻한 나눔의 소식을 전해드립니다.
+            </h3>
+
+            <p>
+              안양 푸드뱅크의 다양한 활동을
+              홈페이지에서 만나보실 수 있습니다.
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         CONTACT
+    ========================== -->
+
+    <section class="contact-section"
+             id="contact">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span>CONTACT</span>
+
+          <h2>오시는 길</h2>
+
+          <p>
+            안양 푸드뱅크를 찾아오시는 길입니다.
+          </p>
+
+        </div>
+
+
+        <div class="contact-layout">
+
+          <div class="contact-card">
+
+            <div class="contact-row">
+
+              <strong>주소</strong>
+
+              <span>
+                경기도 안양시 동안구 평촌대로 389<br>
+                실내빙상장 외부상가 5호
+              </span>
+
+            </div>
+
+
+            <div class="contact-row">
+
+              <strong>전화</strong>
+
+              <a href="tel:0313811399">
+                031-381-1399
+              </a>
+
+            </div>
+
+
+            <div class="contact-row">
+
+              <strong>이메일</strong>
+
+              <a href="mailto:anywoman2017@naver.com">
+                anywoman2017@naver.com
+              </a>
+
+            </div>
+
+          </div>
+
+
+          <div class="map-placeholder">
+
+            <strong>
+              지도 영역
+            </strong>
+
+            <p>
+              지도는 이후 단계에서
+              실제 위치와 연결하겠습니다.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer class="site-footer">
+
+    <div class="container footer-inner">
+
+      <div class="footer-brand">
+
+        <img src="logo.png"
+             alt=""
+             class="footer-logo">
+
+        <div>
+
+          <strong>
+            안양 푸드뱅크
+          </strong>
+
+          <p>
+            지역사회와 함께하는 따뜻한 나눔
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="copyright">
+
+        © 2026 Anyang Food Bank.<br>
+        All Rights Reserved.
+
+      </div>
+
     </div>
 
-  </section>
-</main>
+  </footer>
+
+
+  <script src="main.js"></script>
 
 </body>
+
 </html>
