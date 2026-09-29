@@ -17,6 +17,7 @@ document.addEventListener(
       "https://script.google.com/macros/s/AKfycbwr8tVLYkViqAFVErtxGb-Kl1f9t6RkhUgeZl9yo8ajAIhkxG7C-5zo9xybl3QG_mn_pA/exec";
 
 
+
     /* ==========================================
        MOBILE MENU
     ========================================== */
@@ -71,7 +72,6 @@ document.addEventListener(
               isOpen
             );
 
-
         }
       );
 
@@ -112,10 +112,8 @@ document.addEventListener(
                 "메뉴 열기"
               );
 
-
             }
           );
-
 
         }
       );
@@ -147,92 +145,176 @@ document.addEventListener(
               "false"
             );
 
-
           }
-
 
         }
       );
-
 
     }
 
 
 
     /* ==========================================
-       SITE SETTINGS
+       SITE SETTINGS - JSONP
     ========================================== */
 
-    async function loadSiteSettings() {
+    function loadSiteSettings() {
 
 
-      try {
+      /*
+       * Apps Script와 GitHub Pages 사이의
+       * CORS 문제를 피하기 위해
+       * JSONP 방식을 사용합니다.
+       */
 
 
-        const requestUrl =
-          API_URL +
-          "?action=siteSettings";
+      const callbackName =
+        "anyangFoodbankSiteSettingsCallback";
 
 
-        const response =
-          await fetch(
-            requestUrl,
-            {
-              method: "GET",
-              cache: "no-store"
+      /*
+       * Apps Script가 실행할
+       * 전역 callback 함수
+       */
+
+      window[callbackName] =
+        function (result) {
+
+
+          try {
+
+
+            if (
+              result &&
+              result.success &&
+              result.data
+            ) {
+
+
+              applySiteSettings(
+                result.data
+              );
+
+
+            } else {
+
+
+              console.error(
+                "사이트 설정 데이터 오류:",
+                result
+              );
+
+
             }
-          );
 
 
-        if (!response.ok) {
-
-          throw new Error(
-            "사이트 정보를 불러오지 못했습니다."
-          );
-
-        }
+          } finally {
 
 
-        const result =
-          await response.json();
+            /*
+             * 요청 완료 후 callback 정리
+             */
+
+            try {
+
+              delete window[
+                callbackName
+              ];
+
+            } catch (error) {
+
+              window[
+                callbackName
+              ] = undefined;
+
+            }
 
 
-        if (
-          !result.success ||
-          !result.data
-        ) {
+          }
 
-          throw new Error(
-            result.message ||
-            "사이트 설정 데이터가 없습니다."
-          );
-
-        }
+        };
 
 
-        applySiteSettings(
-          result.data
+
+      /*
+       * Apps Script API를
+       * script 태그로 호출
+       */
+
+      const script =
+        document.createElement(
+          "script"
         );
 
 
-      } catch (error) {
+      script.src =
+        API_URL +
+        "?action=siteSettings" +
+        "&callback=" +
+        callbackName +
+        "&t=" +
+        Date.now();
 
 
-        console.error(
-          "사이트설정 로딩 오류:",
-          error
-        );
+      script.async =
+        true;
 
 
-        /*
-         * API 오류가 발생해도
-         * HTML에 입력되어 있는 기본정보를
-         * 그대로 보여줍니다.
-         */
+
+      /*
+       * API 호출 자체가 실패했을 경우
+       */
+
+      script.onerror =
+        function () {
 
 
-      }
+          console.error(
+            "사이트 설정 API를 불러오지 못했습니다."
+          );
 
+
+          if (
+            script.parentNode
+          ) {
+
+            script.parentNode
+              .removeChild(
+                script
+              );
+
+          }
+
+        };
+
+
+
+      /*
+       * 스크립트 로딩 완료 후
+       * DOM에서 제거
+       */
+
+      script.onload =
+        function () {
+
+
+          if (
+            script.parentNode
+          ) {
+
+            script.parentNode
+              .removeChild(
+                script
+              );
+
+          }
+
+        };
+
+
+      document.head.appendChild(
+        script
+      );
 
     }
 
@@ -269,7 +351,6 @@ document.addEventListener(
         document.title =
           settings["기관명"];
 
-
       }
 
 
@@ -281,19 +362,10 @@ document.addEventListener(
       ) {
 
 
-        const mainMessage =
-          document.getElementById(
-            "mainMessage"
-          );
-
-
-        if (mainMessage) {
-
-          mainMessage.textContent =
-            settings["대표문구"];
-
-        }
-
+        setText(
+          "mainMessage",
+          settings["대표문구"]
+        );
 
       }
 
@@ -310,7 +382,6 @@ document.addEventListener(
           "siteAddress",
           settings["주소"]
         );
-
 
       }
 
@@ -348,9 +419,7 @@ document.addEventListener(
             "tel:" +
             cleanPhone;
 
-
         }
-
 
       }
 
@@ -380,9 +449,7 @@ document.addEventListener(
             "mailto:" +
             settings["이메일"];
 
-
         }
-
 
       }
 
@@ -417,9 +484,7 @@ document.addEventListener(
 
         }
 
-
       }
-
 
     }
 
@@ -447,7 +512,6 @@ document.addEventListener(
           value;
 
       }
-
 
     }
 
