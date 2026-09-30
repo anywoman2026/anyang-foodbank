@@ -62,6 +62,7 @@ document.addEventListener(
         }
       );
 
+
       mobileNav
         .querySelectorAll("a")
         .forEach(
@@ -90,6 +91,7 @@ document.addEventListener(
 
           }
         );
+
 
       window.addEventListener(
         "resize",
@@ -140,8 +142,8 @@ document.addEventListener(
           "script"
         );
 
-      let finished =
-        false;
+      let finished = false;
+
 
       const timeout =
         window.setTimeout(
@@ -215,9 +217,7 @@ document.addEventListener(
 
           cleanup();
 
-          callback(
-            result
-          );
+          callback(result);
 
         };
 
@@ -238,9 +238,7 @@ document.addEventListener(
             " API 호출에 실패했습니다."
           );
 
-          callback(
-            null
-          );
+          callback(null);
 
         };
 
@@ -248,9 +246,7 @@ document.addEventListener(
       script.src =
         API_URL +
         "?action=" +
-        encodeURIComponent(
-          action
-        ) +
+        encodeURIComponent(action) +
         "&callback=" +
         encodeURIComponent(
           callbackName
@@ -258,13 +254,10 @@ document.addEventListener(
         "&t=" +
         Date.now();
 
-      script.async =
-        true;
+      script.async = true;
 
       document.head
-        .appendChild(
-          script
-        );
+        .appendChild(script);
 
     }
 
@@ -323,6 +316,26 @@ document.addEventListener(
 
       }
 
+
+      if (
+        settings["운영단체"]
+      ) {
+
+        setText(
+          "operatingOrganization",
+          "운영단체 : " +
+          settings["운영단체"]
+        );
+
+        setText(
+          "footerOperatingOrganization",
+          "운영단체 " +
+          settings["운영단체"]
+        );
+
+      }
+
+
       if (
         settings["대표문구"]
       ) {
@@ -334,6 +347,169 @@ document.addEventListener(
 
       }
 
+
+      if (
+        settings["설립목적"]
+      ) {
+
+        setText(
+          "organizationPurpose",
+          settings["설립목적"]
+        );
+
+      }
+
+
+      if (
+        settings["연혁1984"]
+      ) {
+
+        setText(
+          "history1984",
+          settings["연혁1984"]
+        );
+
+      }
+
+
+      if (
+        settings["연혁2000"]
+      ) {
+
+        setText(
+          "history2000",
+          settings["연혁2000"]
+        );
+
+      }
+
+
+      if (
+        settings["연혁푸드뱅크"]
+      ) {
+
+        setText(
+          "historyFoodbank",
+          settings["연혁푸드뱅크"]
+        );
+
+      }
+
+
+      if (
+        settings["실적기준연도"]
+      ) {
+
+        setText(
+          "annualYear",
+          settings["실적기준연도"]
+        );
+
+      }
+
+
+      if (
+        settings["연간봉사회수"]
+      ) {
+
+        setText(
+          "annualCount",
+          formatNumber(
+            settings["연간봉사회수"]
+          ) +
+          "회"
+        );
+
+      }
+
+
+      if (
+        settings["연간봉사인원"]
+      ) {
+
+        setText(
+          "annualPeople",
+          formatNumber(
+            settings["연간봉사인원"]
+          ) +
+          "명"
+        );
+
+      }
+
+
+      if (
+        settings["연간봉사시간"]
+      ) {
+
+        setText(
+          "annualHours",
+          formatNumber(
+            settings["연간봉사시간"]
+          ) +
+          "시간"
+        );
+
+      }
+
+
+      if (
+        settings["누계기준기간"]
+      ) {
+
+        setText(
+          "totalPeriod",
+          settings["누계기준기간"]
+        );
+
+      }
+
+
+      if (
+        settings["누계봉사회수"]
+      ) {
+
+        setText(
+          "totalCount",
+          formatNumber(
+            settings["누계봉사회수"]
+          ) +
+          "회"
+        );
+
+      }
+
+
+      if (
+        settings["누계봉사인원"]
+      ) {
+
+        setText(
+          "totalPeople",
+          formatNumber(
+            settings["누계봉사인원"]
+          ) +
+          "명"
+        );
+
+      }
+
+
+      if (
+        settings["누계봉사시간"]
+      ) {
+
+        setText(
+          "totalHours",
+          formatNumber(
+            settings["누계봉사시간"]
+          ) +
+          "시간"
+        );
+
+      }
+
+
       if (
         settings["주소"]
       ) {
@@ -343,7 +519,13 @@ document.addEventListener(
           settings["주소"]
         );
 
+        setText(
+          "mapAddress",
+          settings["주소"]
+        );
+
       }
+
 
       if (
         settings["전화번호"]
@@ -371,6 +553,31 @@ document.addEventListener(
 
       }
 
+
+      const faxRow =
+        document.getElementById(
+          "faxRow"
+        );
+
+      if (
+        settings["팩스번호"]
+      ) {
+
+        setText(
+          "siteFax",
+          settings["팩스번호"]
+        );
+
+      } else if (
+        faxRow
+      ) {
+
+        faxRow.style.display =
+          "none";
+
+      }
+
+
       if (
         settings["이메일"]
       ) {
@@ -392,6 +599,7 @@ document.addEventListener(
         }
 
       }
+
 
       const hoursRow =
         document.getElementById(
@@ -415,6 +623,165 @@ document.addEventListener(
           "none";
 
       }
+
+
+      if (
+        settings["네이버지도URL"]
+      ) {
+
+        const mapLink =
+          document.getElementById(
+            "naverMapLink"
+          );
+
+        if (mapLink) {
+
+          mapLink.href =
+            settings["네이버지도URL"];
+
+        }
+
+      }
+
+    }
+
+
+    /* ==========================================
+       BUSINESSES
+    ========================================== */
+
+    function loadBusinesses() {
+
+      requestJsonp(
+        "businesses",
+        function (result) {
+
+          if (
+            !result ||
+            !result.success ||
+            !Array.isArray(
+              result.data
+            )
+          ) {
+            return;
+          }
+
+
+          const businesses =
+            result.data.filter(
+              function (business) {
+                return (
+                  business.mainVisible !== false
+                );
+              }
+            );
+
+
+          if (
+            businesses.length === 0
+          ) {
+            return;
+          }
+
+
+          renderBusinesses(
+            businesses
+          );
+
+        }
+      );
+
+    }
+
+
+    function renderBusinesses(
+      businesses
+    ) {
+
+      const container =
+        document.getElementById(
+          "businessList"
+        );
+
+      if (!container) {
+        return;
+      }
+
+
+      container.innerHTML = "";
+
+
+      businesses.forEach(
+        function (
+          business,
+          index
+        ) {
+
+          const card =
+            document.createElement(
+              "article"
+            );
+
+          card.className =
+            "business-card";
+
+
+          const number =
+            document.createElement(
+              "div"
+            );
+
+          number.className =
+            "business-number";
+
+          number.textContent =
+            business.number ||
+            String(
+              index + 1
+            ).padStart(
+              2,
+              "0"
+            );
+
+
+          const title =
+            document.createElement(
+              "h3"
+            );
+
+          title.textContent =
+            business.title ||
+            "";
+
+
+          const description =
+            document.createElement(
+              "p"
+            );
+
+          description.textContent =
+            business.description ||
+            "";
+
+
+          card.appendChild(
+            number
+          );
+
+          card.appendChild(
+            title
+          );
+
+          card.appendChild(
+            description
+          );
+
+          container.appendChild(
+            card
+          );
+
+        }
+      );
 
     }
 
@@ -469,8 +836,8 @@ document.addEventListener(
         return;
       }
 
-      container.innerHTML =
-        "";
+      container.innerHTML = "";
+
 
       items.forEach(
         function (
@@ -490,6 +857,7 @@ document.addEventListener(
                 ? " active"
                 : ""
             );
+
 
           const image =
             document.createElement(
@@ -511,6 +879,7 @@ document.addEventListener(
             index === 0
               ? "eager"
               : "lazy";
+
 
           image.onerror =
             function () {
@@ -602,18 +971,19 @@ document.addEventListener(
           activityInfo.className =
             "hero-activity-title";
 
+
           const titleText =
             document.createElement(
               "span"
             );
 
           titleText.textContent =
-            item.title ||
-            "";
+            item.title || "";
 
           activityInfo.appendChild(
             titleText
           );
+
 
           if (
             item.activityDate
@@ -653,6 +1023,7 @@ document.addEventListener(
             buttons
           );
 
+
           if (
             item.title
           ) {
@@ -662,6 +1033,7 @@ document.addEventListener(
             );
 
           }
+
 
           slide.appendChild(
             image
@@ -682,8 +1054,8 @@ document.addEventListener(
         }
       );
 
-      currentHeroIndex =
-        0;
+
+      currentHeroIndex = 0;
 
       createHeroDots(
         items.length
@@ -698,19 +1070,16 @@ document.addEventListener(
 
     function setupFallbackHero() {
 
-      heroItems =
-        [
-          {
-            title: "",
-            activityDate: "",
-            imageUrl:
-              FALLBACK_IMAGE
-          }
-        ];
+      heroItems = [
+        {
+          title: "",
+          activityDate: "",
+          imageUrl:
+            FALLBACK_IMAGE
+        }
+      ];
 
-      createHeroDots(
-        1
-      );
+      createHeroDots(1);
 
       updateHeroControls();
 
@@ -730,8 +1099,8 @@ document.addEventListener(
         return;
       }
 
-      dots.innerHTML =
-        "";
+      dots.innerHTML = "";
+
 
       if (
         count <= 1
@@ -744,8 +1113,10 @@ document.addEventListener(
 
       }
 
+
       dots.style.display =
         "flex";
+
 
       for (
         let i = 0;
@@ -758,8 +1129,7 @@ document.addEventListener(
             "button"
           );
 
-        dot.type =
-          "button";
+        dot.type = "button";
 
         dot.className =
           "hero-dot" +
@@ -775,22 +1145,20 @@ document.addEventListener(
           "번째 배너 보기"
         );
 
+
         dot.addEventListener(
           "click",
           function () {
 
-            showHeroSlide(
-              i
-            );
+            showHeroSlide(i);
 
             restartHeroAutoPlay();
 
           }
         );
 
-        dots.appendChild(
-          dot
-        );
+
+        dots.appendChild(dot);
 
       }
 
@@ -811,11 +1179,13 @@ document.addEventListener(
           ".hero-dot"
         );
 
+
       if (
         slides.length === 0
       ) {
         return;
       }
+
 
       if (
         index < 0
@@ -826,14 +1196,15 @@ document.addEventListener(
 
       }
 
+
       if (
         index >= slides.length
       ) {
 
-        index =
-          0;
+        index = 0;
 
       }
+
 
       slides.forEach(
         function (
@@ -849,6 +1220,7 @@ document.addEventListener(
         }
       );
 
+
       dots.forEach(
         function (
           dot,
@@ -862,6 +1234,7 @@ document.addEventListener(
 
         }
       );
+
 
       currentHeroIndex =
         index;
@@ -884,6 +1257,7 @@ document.addEventListener(
       const multiple =
         heroItems.length > 1;
 
+
       if (previous) {
 
         previous.style.display =
@@ -892,6 +1266,7 @@ document.addEventListener(
             : "none";
 
       }
+
 
       if (next) {
 
@@ -909,11 +1284,13 @@ document.addEventListener(
 
       stopHeroAutoPlay();
 
+
       if (
         heroItems.length <= 1
       ) {
         return;
       }
+
 
       if (
         window.matchMedia(
@@ -922,6 +1299,7 @@ document.addEventListener(
       ) {
         return;
       }
+
 
       heroTimer =
         window.setInterval(
@@ -948,8 +1326,7 @@ document.addEventListener(
           heroTimer
         );
 
-        heroTimer =
-          null;
+        heroTimer = null;
 
       }
 
@@ -974,6 +1351,7 @@ document.addEventListener(
         "heroNext"
       );
 
+
     if (heroPrev) {
 
       heroPrev.addEventListener(
@@ -990,6 +1368,7 @@ document.addEventListener(
       );
 
     }
+
 
     if (heroNext) {
 
@@ -1014,6 +1393,7 @@ document.addEventListener(
         "heroSlider"
       );
 
+
     if (heroSlider) {
 
       heroSlider.addEventListener(
@@ -1026,8 +1406,9 @@ document.addEventListener(
         startHeroAutoPlay
       );
 
-      let touchStartX =
-        0;
+
+      let touchStartX = 0;
+
 
       heroSlider.addEventListener(
         "touchstart",
@@ -1043,6 +1424,7 @@ document.addEventListener(
         }
       );
 
+
       heroSlider.addEventListener(
         "touchend",
         function (event) {
@@ -1055,6 +1437,7 @@ document.addEventListener(
             touchStartX -
             touchEndX;
 
+
           if (
             Math.abs(
               difference
@@ -1062,6 +1445,7 @@ document.addEventListener(
           ) {
             return;
           }
+
 
           if (
             difference > 0
@@ -1078,6 +1462,7 @@ document.addEventListener(
             );
 
           }
+
 
           restartHeroAutoPlay();
 
@@ -1105,9 +1490,11 @@ document.addEventListener(
               "noticeList"
             );
 
+
           if (!container) {
             return;
           }
+
 
           if (
             !result ||
@@ -1125,8 +1512,9 @@ document.addEventListener(
 
           }
 
-          container.innerHTML =
-            "";
+
+          container.innerHTML = "";
+
 
           result.data
             .slice(
@@ -1145,6 +1533,7 @@ document.addEventListener(
 
                 item.className =
                   "notice-item";
+
 
                 if (
                   notice.attachmentUrl
@@ -1171,8 +1560,7 @@ document.addEventListener(
                   "notice-date";
 
                 date.textContent =
-                  notice.date ||
-                  "";
+                  notice.date || "";
 
 
                 const title =
@@ -1184,17 +1572,12 @@ document.addEventListener(
                   "notice-title";
 
                 title.textContent =
-                  notice.title ||
-                  "";
+                  notice.title || "";
 
 
-                item.appendChild(
-                  date
-                );
+                item.appendChild(date);
 
-                item.appendChild(
-                  title
-                );
+                item.appendChild(title);
 
 
                 if (
@@ -1217,6 +1600,7 @@ document.addEventListener(
                   );
 
                 }
+
 
                 container.appendChild(
                   item
@@ -1246,9 +1630,11 @@ document.addEventListener(
               "activityList"
             );
 
+
           if (!container) {
             return;
           }
+
 
           if (
             !result ||
@@ -1266,8 +1652,9 @@ document.addEventListener(
 
           }
 
-          container.innerHTML =
-            "";
+
+          container.innerHTML = "";
+
 
           result.data
             .slice(
@@ -1314,6 +1701,7 @@ document.addEventListener(
                 image.loading =
                   "lazy";
 
+
                 image.onerror =
                   function () {
 
@@ -1329,6 +1717,7 @@ document.addEventListener(
                     }
 
                   };
+
 
                 imageWrap.appendChild(
                   image
@@ -1370,13 +1759,9 @@ document.addEventListener(
                   "";
 
 
-                body.appendChild(
-                  date
-                );
+                body.appendChild(date);
 
-                body.appendChild(
-                  title
-                );
+                body.appendChild(title);
 
                 card.appendChild(
                   imageWrap
@@ -1400,7 +1785,7 @@ document.addEventListener(
 
 
     /* ==========================================
-       HELPER
+       HELPERS
     ========================================== */
 
     function setText(
@@ -1423,13 +1808,51 @@ document.addEventListener(
     }
 
 
+    function formatNumber(
+      value
+    ) {
+
+      const cleaned =
+        String(value)
+          .replace(
+            /,/g,
+            ""
+          )
+          .trim();
+
+      const number =
+        Number(cleaned);
+
+
+      if (
+        Number.isNaN(number)
+      ) {
+
+        return value;
+
+      }
+
+
+      return number
+        .toLocaleString(
+          "ko-KR"
+        );
+
+    }
+
+
     /* ==========================================
        START
     ========================================== */
 
     loadSiteSettings();
+
+    loadBusinesses();
+
     loadBanners();
+
     loadNotices();
+
     loadActivities();
 
   }
