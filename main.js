@@ -11,7 +11,7 @@ document.addEventListener(
       "https://script.google.com/macros/s/AKfycby9PKtCQULkmmHtuPGgDzOxaSu3eqda7FZEDTN-j9DJww3ne9i-0iy6Xs6-RtN-rFfB/exec";
 
     const FALLBACK_IMAGE =
-      "main-banner.png";
+      "images/common/main-banner.png";
 
     let siteSettings = {};
     let heroItems = [];
