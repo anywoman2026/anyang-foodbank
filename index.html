@@ -2,6 +2,7 @@
 <html lang="ko">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta name="viewport"
@@ -12,11 +13,14 @@
   <meta name="description"
         content="안양 푸드뱅크 공식 홈페이지입니다. 식품기부, 이용안내, 자원봉사 및 지역사회 나눔 활동을 안내합니다.">
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet"
+        href="style.css">
+
 </head>
 
 
 <body>
+
 
 <header class="site-header">
 
@@ -95,51 +99,83 @@
 <main id="home">
 
 
-  <!-- HERO -->
+  <!-- =========================
+       MAIN HERO
+  ========================== -->
 
   <section class="hero">
 
-    <div class="desktop-hero">
+    <div id="heroSlider"
+         class="hero-slider">
 
-      <img src="main-banner.png"
-           class="main-banner"
-           alt="당신의 작은 나눔이 따뜻한 안양을 만듭니다. 식품기부로 따뜻한 안양을 만들어주세요.">
+      <div id="heroSlides"
+           class="hero-slides">
 
-    </div>
+        <!-- 기본 fallback -->
+
+        <article class="hero-slide active">
+
+          <img src="main-banner.png"
+               alt="안양 푸드뱅크"
+               class="hero-slide-image">
+
+          <div class="hero-overlay"></div>
+
+          <div class="hero-content">
+
+            <p class="hero-eyebrow">
+              ANYANG FOOD BANK
+            </p>
+
+            <h1 id="mainMessage">
+              당신의 작은 나눔이<br>
+              따뜻한 안양을 만듭니다.
+            </h1>
+
+            <p class="hero-text">
+              식품기부로 따뜻한 안양을 만들어주세요.
+            </p>
+
+            <div class="hero-buttons">
+
+              <a href="#donation"
+                 class="button button-primary">
+                기부 안내
+              </a>
+
+              <a href="#guide"
+                 class="button hero-outline">
+                이용 안내
+              </a>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      </div>
 
 
-    <div class="mobile-hero">
-
-      <div class="mobile-hero-inner">
-
-        <p class="hero-small">
-          ANYANG FOOD BANK
-        </p>
-
-        <h1 id="mainMessage">
-          당신의 작은 나눔이<br>
-          따뜻한 안양을 만듭니다.
-        </h1>
-
-        <p class="hero-description">
-          식품기부로 따뜻한 안양을 만들어주세요.
-        </p>
+      <button id="heroPrev"
+              class="hero-arrow hero-prev"
+              type="button"
+              aria-label="이전 배너">
+        ‹
+      </button>
 
 
-        <div class="hero-buttons">
+      <button id="heroNext"
+              class="hero-arrow hero-next"
+              type="button"
+              aria-label="다음 배너">
+        ›
+      </button>
 
-          <a href="#donation"
-             class="button button-primary">
-            기부 안내
-          </a>
 
-          <a href="#guide"
-             class="button button-outline">
-            이용 안내
-          </a>
-
-        </div>
-
+      <div id="heroDots"
+           class="hero-dots"
+           aria-label="배너 선택">
       </div>
 
     </div>
@@ -148,7 +184,7 @@
 
 
 
-  <!-- QUICK MENU -->
+  <!-- QUICK -->
 
   <section class="quick-section"
            id="guide">
@@ -175,20 +211,15 @@
         <a href="#guide"
            class="quick-card">
 
-          <div class="quick-icon">
-            01
-          </div>
+          <div class="quick-icon">01</div>
 
           <h3>이용안내</h3>
 
           <p>
-            푸드뱅크 이용 대상과 이용 방법을
-            안내합니다.
+            푸드뱅크 이용 대상과 이용 방법을 안내합니다.
           </p>
 
-          <strong>
-            자세히 보기 →
-          </strong>
+          <strong>자세히 보기 →</strong>
 
         </a>
 
@@ -196,20 +227,15 @@
         <a href="#donation"
            class="quick-card">
 
-          <div class="quick-icon">
-            02
-          </div>
+          <div class="quick-icon">02</div>
 
           <h3>기부안내</h3>
 
           <p>
-            식품과 생활용품으로 따뜻한
-            나눔에 참여하실 수 있습니다.
+            식품과 생활용품으로 따뜻한 나눔에 참여하실 수 있습니다.
           </p>
 
-          <strong>
-            자세히 보기 →
-          </strong>
+          <strong>자세히 보기 →</strong>
 
         </a>
 
@@ -217,20 +243,15 @@
         <a href="#volunteer"
            class="quick-card">
 
-          <div class="quick-icon">
-            03
-          </div>
+          <div class="quick-icon">03</div>
 
           <h3>자원봉사</h3>
 
           <p>
-            지역사회 나눔 활동에 함께
-            참여하실 수 있습니다.
+            지역사회 나눔 활동에 함께 참여하실 수 있습니다.
           </p>
 
-          <strong>
-            자세히 보기 →
-          </strong>
+          <strong>자세히 보기 →</strong>
 
         </a>
 
@@ -266,16 +287,14 @@
       <div class="about-content">
 
         <p>
-          안양 푸드뱅크는 기부받은 식품과
-          생활용품을 도움이 필요한 이웃에게
-          전달하여 지역사회 나눔문화 확산에
-          함께하고 있습니다.
+          안양 푸드뱅크는 기부받은 식품과 생활용품을
+          도움이 필요한 이웃에게 전달하여 지역사회
+          나눔문화 확산에 함께하고 있습니다.
         </p>
 
         <p>
-          소중한 기부가 필요한 곳에 전달될 수
-          있도록 지역사회와 함께 지속적인
-          나눔 활동을 이어가겠습니다.
+          소중한 기부가 필요한 곳에 전달될 수 있도록
+          지역사회와 함께 지속적인 나눔 활동을 이어가겠습니다.
         </p>
 
       </div>
@@ -310,18 +329,13 @@
 
         <article class="business-card">
 
-          <div class="business-number">
-            01
-          </div>
+          <div class="business-number">01</div>
 
-          <h3>
-            기부식품 제공사업
-          </h3>
+          <h3>기부식품 제공사업</h3>
 
           <p>
-            기업과 개인으로부터 기부받은
-            식품 및 생활용품을 필요한
-            이웃에게 전달합니다.
+            기업과 개인으로부터 기부받은 식품 및
+            생활용품을 필요한 이웃에게 전달합니다.
           </p>
 
         </article>
@@ -329,18 +343,13 @@
 
         <article class="business-card">
 
-          <div class="business-number">
-            02
-          </div>
+          <div class="business-number">02</div>
 
-          <h3>
-            G-푸드드림
-          </h3>
+          <h3>G-푸드드림</h3>
 
           <p>
-            지역 내 취약계층의 안정적인
-            생활을 지원하기 위한 나눔사업을
-            운영합니다.
+            지역 내 취약계층의 안정적인 생활을
+            지원하기 위한 나눔사업을 운영합니다.
           </p>
 
         </article>
@@ -348,13 +357,9 @@
 
         <article class="business-card">
 
-          <div class="business-number">
-            03
-          </div>
+          <div class="business-number">03</div>
 
-          <h3>
-            지역사회 나눔
-          </h3>
+          <h3>지역사회 나눔</h3>
 
           <p>
             지역 기관·기업·자원봉사자와 함께
@@ -380,9 +385,7 @@
 
       <div>
 
-        <span>
-          SHARE WITH US
-        </span>
+        <span>SHARE WITH US</span>
 
         <h2>
           여러분의 나눔이<br>
@@ -501,43 +504,67 @@
       </div>
 
 
-      <div class="news-grid">
+      <div class="news-layout">
 
-        <article class="news-card">
 
-          <div class="news-type">
-            공지사항
+        <!-- 공지사항 -->
+
+        <section class="notice-panel">
+
+          <div class="news-panel-header">
+
+            <div>
+
+              <span>NOTICE</span>
+
+              <h3>공지사항</h3>
+
+            </div>
+
           </div>
 
-          <h3>
-            홈페이지를 준비하고 있습니다.
-          </h3>
 
-          <p>
-            다음 단계에서 Google Sheets와
-            연결하여 공지사항을 자동으로
-            표시할 예정입니다.
-          </p>
+          <div id="noticeList"
+               class="notice-list">
 
-        </article>
+            <div class="news-loading">
+              공지사항을 불러오는 중입니다.
+            </div>
 
-
-        <article class="news-card">
-
-          <div class="news-type">
-            활동소식
           </div>
 
-          <h3>
-            따뜻한 나눔의 소식을 전해드립니다.
-          </h3>
+        </section>
 
-          <p>
-            안양 푸드뱅크의 다양한 활동을
-            홈페이지에서 만나보실 수 있습니다.
-          </p>
 
-        </article>
+
+        <!-- 활동소식 -->
+
+        <section class="activity-panel">
+
+          <div class="news-panel-header">
+
+            <div>
+
+              <span>ACTIVITY</span>
+
+              <h3>활동소식</h3>
+
+            </div>
+
+          </div>
+
+
+          <div id="activityList"
+               class="activity-grid">
+
+            <div class="news-loading">
+              활동소식을 불러오는 중입니다.
+            </div>
+
+          </div>
+
+        </section>
+
 
       </div>
 
@@ -619,15 +646,12 @@
 
           </div>
 
-
         </div>
 
 
         <div class="map-placeholder">
 
-          <strong>
-            지도 영역
-          </strong>
+          <strong>지도 영역</strong>
 
           <p>
             지도는 이후 단계에서
@@ -641,6 +665,7 @@
     </div>
 
   </section>
+
 
 </main>
 
@@ -686,4 +711,5 @@
 <script src="main.js"></script>
 
 </body>
+
 </html>
