@@ -3,28 +3,20 @@
  * main.js
  *************************************************/
 
-
 document.addEventListener(
   "DOMContentLoaded",
   function () {
 
-
     const API_URL =
-      "https://script.google.com/macros/s/AKfycbwr8tVLYkViqAFVErtxGb-Kl1f9t6RkhUgeZl9yo8ajAIhkxG7C-5zo9xybl3QG_mn_pA/exec";
-
+      "https://script.google.com/macros/s/AKfycby9PKtCQULkmmHtuPGgDzOxaSu3eqda7FZEDTN-j9DJww3ne9i-0iy6Xs6-RtN-rFfB/exec";
 
     const FALLBACK_IMAGE =
       "main-banner.png";
 
-
     let siteSettings = {};
-
     let heroItems = [];
-
     let currentHeroIndex = 0;
-
     let heroTimer = null;
-
 
 
     /* ==========================================
@@ -36,35 +28,29 @@ document.addEventListener(
         "menuButton"
       );
 
-
     const mobileNav =
       document.getElementById(
         "mobileNav"
       );
-
 
     if (
       menuButton &&
       mobileNav
     ) {
 
-
       menuButton.addEventListener(
         "click",
         function () {
-
 
           const isOpen =
             mobileNav
               .classList
               .toggle("active");
 
-
           menuButton.setAttribute(
             "aria-expanded",
             String(isOpen)
           );
-
 
           menuButton.setAttribute(
             "aria-label",
@@ -76,28 +62,23 @@ document.addEventListener(
         }
       );
 
-
       mobileNav
         .querySelectorAll("a")
         .forEach(
           function (link) {
 
-
             link.addEventListener(
               "click",
               function () {
-
 
                 mobileNav
                   .classList
                   .remove("active");
 
-
                 menuButton.setAttribute(
                   "aria-expanded",
                   "false"
                 );
-
 
                 menuButton.setAttribute(
                   "aria-label",
@@ -110,21 +91,17 @@ document.addEventListener(
           }
         );
 
-
       window.addEventListener(
         "resize",
         function () {
-
 
           if (
             window.innerWidth > 950
           ) {
 
-
             mobileNav
               .classList
               .remove("active");
-
 
             menuButton.setAttribute(
               "aria-expanded",
@@ -139,7 +116,6 @@ document.addEventListener(
     }
 
 
-
     /* ==========================================
        JSONP
     ========================================== */
@@ -148,7 +124,6 @@ document.addEventListener(
       action,
       callback
     ) {
-
 
       const callbackName =
         "anyangFoodbank_" +
@@ -160,60 +135,43 @@ document.addEventListener(
           Math.random() * 100000
         );
 
-
       const script =
         document.createElement(
           "script"
         );
 
-
       let finished =
         false;
-
 
       const timeout =
         window.setTimeout(
           function () {
 
-
             if (finished) {
-
               return;
-
             }
 
-
-            finished =
-              true;
-
+            finished = true;
 
             cleanup();
-
 
             console.error(
               action +
               " API 응답 시간이 초과되었습니다."
             );
 
-
-            callback(
-              null
-            );
-
+            callback(null);
 
           },
           10000
         );
 
 
-
       function cleanup() {
-
 
         window.clearTimeout(
           timeout
         );
-
 
         try {
 
@@ -228,7 +186,6 @@ document.addEventListener(
           ] = undefined;
 
         }
-
 
         if (
           script.parentNode
@@ -245,26 +202,18 @@ document.addEventListener(
       }
 
 
-
       window[
         callbackName
       ] =
         function (result) {
 
-
           if (finished) {
-
             return;
-
           }
 
-
-          finished =
-            true;
-
+          finished = true;
 
           cleanup();
-
 
           callback(
             result
@@ -273,37 +222,27 @@ document.addEventListener(
         };
 
 
-
       script.onerror =
         function () {
 
-
           if (finished) {
-
             return;
-
           }
 
-
-          finished =
-            true;
-
+          finished = true;
 
           cleanup();
-
 
           console.error(
             action +
             " API 호출에 실패했습니다."
           );
 
-
           callback(
             null
           );
 
         };
-
 
 
       script.src =
@@ -319,10 +258,8 @@ document.addEventListener(
         "&t=" +
         Date.now();
 
-
       script.async =
         true;
-
 
       document.head
         .appendChild(
@@ -332,33 +269,26 @@ document.addEventListener(
     }
 
 
-
     /* ==========================================
        SITE SETTINGS
     ========================================== */
 
     function loadSiteSettings() {
 
-
       requestJsonp(
         "siteSettings",
         function (result) {
-
 
           if (
             !result ||
             !result.success ||
             !result.data
           ) {
-
             return;
-
           }
-
 
           siteSettings =
             result.data;
-
 
           applySiteSettings(
             siteSettings
@@ -370,39 +300,32 @@ document.addEventListener(
     }
 
 
-
     function applySiteSettings(
       settings
     ) {
 
-
       if (
         settings["기관명"]
       ) {
-
 
         setText(
           "organizationName",
           settings["기관명"]
         );
 
-
         setText(
           "footerOrganizationName",
           settings["기관명"]
         );
-
 
         document.title =
           settings["기관명"];
 
       }
 
-
       if (
         settings["대표문구"]
       ) {
-
 
         setText(
           "mainMessage",
@@ -411,11 +334,9 @@ document.addEventListener(
 
       }
 
-
       if (
         settings["주소"]
       ) {
-
 
         setText(
           "siteAddress",
@@ -424,24 +345,19 @@ document.addEventListener(
 
       }
 
-
       if (
         settings["전화번호"]
       ) {
-
 
         const phone =
           document.getElementById(
             "sitePhone"
           );
 
-
         if (phone) {
-
 
           phone.textContent =
             settings["전화번호"];
-
 
           phone.href =
             "tel:" +
@@ -455,24 +371,19 @@ document.addEventListener(
 
       }
 
-
       if (
         settings["이메일"]
       ) {
-
 
         const email =
           document.getElementById(
             "siteEmail"
           );
 
-
         if (email) {
-
 
           email.textContent =
             settings["이메일"];
-
 
           email.href =
             "mailto:" +
@@ -482,28 +393,23 @@ document.addEventListener(
 
       }
 
-
       const hoursRow =
         document.getElementById(
           "hoursRow"
         );
 
-
       if (
         settings["운영시간"]
       ) {
-
 
         setText(
           "siteHours",
           settings["운영시간"]
         );
 
-
       } else if (
         hoursRow
       ) {
-
 
         hoursRow.style.display =
           "none";
@@ -513,18 +419,15 @@ document.addEventListener(
     }
 
 
-
     /* ==========================================
        HERO BANNERS
     ========================================== */
 
     function loadBanners() {
 
-
       requestJsonp(
         "banners",
         function (result) {
-
 
           if (
             !result ||
@@ -535,17 +438,13 @@ document.addEventListener(
             result.data.length === 0
           ) {
 
-
             setupFallbackHero();
-
             return;
 
           }
 
-
           heroItems =
             result.data;
-
 
           renderHeroSlides(
             heroItems
@@ -557,28 +456,21 @@ document.addEventListener(
     }
 
 
-
     function renderHeroSlides(
       items
     ) {
-
 
       const container =
         document.getElementById(
           "heroSlides"
         );
 
-
       if (!container) {
-
         return;
-
       }
-
 
       container.innerHTML =
         "";
-
 
       items.forEach(
         function (
@@ -586,12 +478,10 @@ document.addEventListener(
           index
         ) {
 
-
           const slide =
             document.createElement(
               "article"
             );
-
 
           slide.className =
             "hero-slide" +
@@ -601,36 +491,29 @@ document.addEventListener(
                 : ""
             );
 
-
           const image =
             document.createElement(
               "img"
             );
 
-
           image.className =
             "hero-slide-image";
-
 
           image.src =
             item.imageUrl ||
             FALLBACK_IMAGE;
 
-
           image.alt =
             item.title ||
             "안양 푸드뱅크 활동사진";
-
 
           image.loading =
             index === 0
               ? "eager"
               : "lazy";
 
-
           image.onerror =
             function () {
-
 
               if (
                 image.src.indexOf(
@@ -646,16 +529,13 @@ document.addEventListener(
             };
 
 
-
           const overlay =
             document.createElement(
               "div"
             );
 
-
           overlay.className =
             "hero-overlay";
-
 
 
           const content =
@@ -663,10 +543,8 @@ document.addEventListener(
               "div"
             );
 
-
           content.className =
             "hero-content";
-
 
 
           const eyebrow =
@@ -674,14 +552,11 @@ document.addEventListener(
               "p"
             );
 
-
           eyebrow.className =
             "hero-eyebrow";
 
-
           eyebrow.textContent =
             "ANYANG FOOD BANK";
-
 
 
           const heading =
@@ -689,11 +564,9 @@ document.addEventListener(
               "h1"
             );
 
-
           heading.textContent =
             siteSettings["대표문구"] ||
             "당신의 작은 나눔이 따뜻한 안양을 만듭니다.";
-
 
 
           const description =
@@ -701,14 +574,11 @@ document.addEventListener(
               "p"
             );
 
-
           description.className =
             "hero-text";
 
-
           description.textContent =
             "식품기부로 따뜻한 안양을 만들어주세요.";
-
 
 
           const buttons =
@@ -716,15 +586,12 @@ document.addEventListener(
               "div"
             );
 
-
           buttons.className =
             "hero-buttons";
-
 
           buttons.innerHTML =
             '<a href="#donation" class="button button-primary">기부 안내</a>' +
             '<a href="#guide" class="button hero-outline">이용 안내</a>';
-
 
 
           const activityInfo =
@@ -732,45 +599,36 @@ document.addEventListener(
               "div"
             );
 
-
           activityInfo.className =
             "hero-activity-title";
-
 
           const titleText =
             document.createElement(
               "span"
             );
 
-
           titleText.textContent =
             item.title ||
             "";
-
 
           activityInfo.appendChild(
             titleText
           );
 
-
           if (
             item.activityDate
           ) {
-
 
             const date =
               document.createElement(
                 "span"
               );
 
-
             date.className =
               "hero-activity-date";
 
-
             date.textContent =
               item.activityDate;
-
 
             activityInfo.appendChild(
               date
@@ -779,26 +637,21 @@ document.addEventListener(
           }
 
 
-
           content.appendChild(
             eyebrow
           );
-
 
           content.appendChild(
             heading
           );
 
-
           content.appendChild(
             description
           );
 
-
           content.appendChild(
             buttons
           );
-
 
           if (
             item.title
@@ -810,21 +663,17 @@ document.addEventListener(
 
           }
 
-
           slide.appendChild(
             image
           );
-
 
           slide.appendChild(
             overlay
           );
 
-
           slide.appendChild(
             content
           );
-
 
           container.appendChild(
             slide
@@ -833,27 +682,21 @@ document.addEventListener(
         }
       );
 
-
       currentHeroIndex =
         0;
-
 
       createHeroDots(
         items.length
       );
 
-
       updateHeroControls();
-
 
       startHeroAutoPlay();
 
     }
 
 
-
     function setupFallbackHero() {
-
 
       heroItems =
         [
@@ -865,39 +708,30 @@ document.addEventListener(
           }
         ];
 
-
       createHeroDots(
         1
       );
-
 
       updateHeroControls();
 
     }
 
 
-
     function createHeroDots(
       count
     ) {
-
 
       const dots =
         document.getElementById(
           "heroDots"
         );
 
-
       if (!dots) {
-
         return;
-
       }
-
 
       dots.innerHTML =
         "";
-
 
       if (
         count <= 1
@@ -910,10 +744,8 @@ document.addEventListener(
 
       }
 
-
       dots.style.display =
         "flex";
-
 
       for (
         let i = 0;
@@ -921,16 +753,13 @@ document.addEventListener(
         i++
       ) {
 
-
         const dot =
           document.createElement(
             "button"
           );
 
-
         dot.type =
           "button";
-
 
         dot.className =
           "hero-dot" +
@@ -940,29 +769,24 @@ document.addEventListener(
               : ""
           );
 
-
         dot.setAttribute(
           "aria-label",
           (i + 1) +
           "번째 배너 보기"
         );
 
-
         dot.addEventListener(
           "click",
           function () {
-
 
             showHeroSlide(
               i
             );
 
-
             restartHeroAutoPlay();
 
           }
         );
-
 
         dots.appendChild(
           dot
@@ -973,32 +797,25 @@ document.addEventListener(
     }
 
 
-
     function showHeroSlide(
       index
     ) {
-
 
       const slides =
         document.querySelectorAll(
           ".hero-slide"
         );
 
-
       const dots =
         document.querySelectorAll(
           ".hero-dot"
         );
 
-
       if (
         slides.length === 0
       ) {
-
         return;
-
       }
-
 
       if (
         index < 0
@@ -1009,7 +826,6 @@ document.addEventListener(
 
       }
 
-
       if (
         index >= slides.length
       ) {
@@ -1019,13 +835,11 @@ document.addEventListener(
 
       }
 
-
       slides.forEach(
         function (
           slide,
           slideIndex
         ) {
-
 
           slide.classList.toggle(
             "active",
@@ -1035,13 +849,11 @@ document.addEventListener(
         }
       );
 
-
       dots.forEach(
         function (
           dot,
           dotIndex
         ) {
-
 
           dot.classList.toggle(
             "active",
@@ -1051,32 +863,26 @@ document.addEventListener(
         }
       );
 
-
       currentHeroIndex =
         index;
 
     }
 
 
-
     function updateHeroControls() {
-
 
       const previous =
         document.getElementById(
           "heroPrev"
         );
 
-
       const next =
         document.getElementById(
           "heroNext"
         );
 
-
       const multiple =
         heroItems.length > 1;
-
 
       if (previous) {
 
@@ -1086,7 +892,6 @@ document.addEventListener(
             : "none";
 
       }
-
 
       if (next) {
 
@@ -1100,37 +905,27 @@ document.addEventListener(
     }
 
 
-
     function startHeroAutoPlay() {
 
-
       stopHeroAutoPlay();
-
 
       if (
         heroItems.length <= 1
       ) {
-
         return;
-
       }
-
 
       if (
         window.matchMedia(
           "(prefers-reduced-motion: reduce)"
         ).matches
       ) {
-
         return;
-
       }
-
 
       heroTimer =
         window.setInterval(
           function () {
-
 
             showHeroSlide(
               currentHeroIndex + 1
@@ -1143,19 +938,15 @@ document.addEventListener(
     }
 
 
-
     function stopHeroAutoPlay() {
-
 
       if (
         heroTimer
       ) {
 
-
         window.clearInterval(
           heroTimer
         );
-
 
         heroTimer =
           null;
@@ -1165,16 +956,12 @@ document.addEventListener(
     }
 
 
-
     function restartHeroAutoPlay() {
 
-
       stopHeroAutoPlay();
-
       startHeroAutoPlay();
 
     }
-
 
 
     const heroPrev =
@@ -1182,25 +969,20 @@ document.addEventListener(
         "heroPrev"
       );
 
-
     const heroNext =
       document.getElementById(
         "heroNext"
       );
 
-
     if (heroPrev) {
-
 
       heroPrev.addEventListener(
         "click",
         function () {
 
-
           showHeroSlide(
             currentHeroIndex - 1
           );
-
 
           restartHeroAutoPlay();
 
@@ -1209,19 +991,15 @@ document.addEventListener(
 
     }
 
-
     if (heroNext) {
-
 
       heroNext.addEventListener(
         "click",
         function () {
 
-
           showHeroSlide(
             currentHeroIndex + 1
           );
-
 
           restartHeroAutoPlay();
 
@@ -1229,7 +1007,6 @@ document.addEventListener(
       );
 
     }
-
 
 
     const heroSlider =
@@ -1237,30 +1014,24 @@ document.addEventListener(
         "heroSlider"
       );
 
-
     if (heroSlider) {
-
 
       heroSlider.addEventListener(
         "mouseenter",
         stopHeroAutoPlay
       );
 
-
       heroSlider.addEventListener(
         "mouseleave",
         startHeroAutoPlay
       );
 
-
       let touchStartX =
         0;
-
 
       heroSlider.addEventListener(
         "touchstart",
         function (event) {
-
 
           touchStartX =
             event.changedTouches[0]
@@ -1272,52 +1043,41 @@ document.addEventListener(
         }
       );
 
-
       heroSlider.addEventListener(
         "touchend",
         function (event) {
-
 
           const touchEndX =
             event.changedTouches[0]
               .screenX;
 
-
           const difference =
             touchStartX -
             touchEndX;
-
 
           if (
             Math.abs(
               difference
             ) < 50
           ) {
-
             return;
-
           }
-
 
           if (
             difference > 0
           ) {
 
-
             showHeroSlide(
               currentHeroIndex + 1
             );
 
-
           } else {
-
 
             showHeroSlide(
               currentHeroIndex - 1
             );
 
           }
-
 
           restartHeroAutoPlay();
 
@@ -1330,31 +1090,24 @@ document.addEventListener(
     }
 
 
-
     /* ==========================================
        NOTICES
     ========================================== */
 
     function loadNotices() {
 
-
       requestJsonp(
         "notices",
         function (result) {
-
 
           const container =
             document.getElementById(
               "noticeList"
             );
 
-
           if (!container) {
-
             return;
-
           }
-
 
           if (
             !result ||
@@ -1365,19 +1118,15 @@ document.addEventListener(
             result.data.length === 0
           ) {
 
-
             container.innerHTML =
               '<div class="news-empty">등록된 공지사항이 없습니다.</div>';
-
 
             return;
 
           }
 
-
           container.innerHTML =
             "";
-
 
           result.data
             .slice(
@@ -1387,7 +1136,6 @@ document.addEventListener(
             .forEach(
               function (notice) {
 
-
                 const item =
                   document.createElement(
                     notice.attachmentUrl
@@ -1395,23 +1143,18 @@ document.addEventListener(
                       : "div"
                   );
 
-
                 item.className =
                   "notice-item";
-
 
                 if (
                   notice.attachmentUrl
                 ) {
 
-
                   item.href =
                     notice.attachmentUrl;
 
-
                   item.target =
                     "_blank";
-
 
                   item.rel =
                     "noopener noreferrer";
@@ -1419,21 +1162,17 @@ document.addEventListener(
                 }
 
 
-
                 const date =
                   document.createElement(
                     "span"
                   );
 
-
                 date.className =
                   "notice-date";
-
 
                 date.textContent =
                   notice.date ||
                   "";
-
 
 
                 const title =
@@ -1441,53 +1180,43 @@ document.addEventListener(
                     "strong"
                   );
 
-
                 title.className =
                   "notice-title";
-
 
                 title.textContent =
                   notice.title ||
                   "";
 
 
-
                 item.appendChild(
                   date
                 );
-
 
                 item.appendChild(
                   title
                 );
 
 
-
                 if (
                   notice.content
                 ) {
-
 
                   const content =
                     document.createElement(
                       "p"
                     );
 
-
                   content.className =
                     "notice-content";
 
-
                   content.textContent =
                     notice.content;
-
 
                   item.appendChild(
                     content
                   );
 
                 }
-
 
                 container.appendChild(
                   item
@@ -1502,31 +1231,24 @@ document.addEventListener(
     }
 
 
-
     /* ==========================================
        ACTIVITIES
     ========================================== */
 
     function loadActivities() {
 
-
       requestJsonp(
         "activities",
         function (result) {
-
 
           const container =
             document.getElementById(
               "activityList"
             );
 
-
           if (!container) {
-
             return;
-
           }
-
 
           if (
             !result ||
@@ -1537,19 +1259,15 @@ document.addEventListener(
             result.data.length === 0
           ) {
 
-
             container.innerHTML =
               '<div class="news-empty">등록된 활동소식이 없습니다.</div>';
-
 
             return;
 
           }
 
-
           container.innerHTML =
             "";
-
 
           result.data
             .slice(
@@ -1559,16 +1277,13 @@ document.addEventListener(
             .forEach(
               function (activity) {
 
-
                 const card =
                   document.createElement(
                     "article"
                   );
 
-
                 card.className =
                   "activity-card";
-
 
 
                 const imageWrap =
@@ -1576,10 +1291,8 @@ document.addEventListener(
                     "div"
                   );
 
-
                 imageWrap.className =
                   "activity-image-wrap";
-
 
 
                 const image =
@@ -1587,28 +1300,22 @@ document.addEventListener(
                     "img"
                   );
 
-
                 image.className =
                   "activity-image";
-
 
                 image.src =
                   activity.imageUrl ||
                   FALLBACK_IMAGE;
 
-
                 image.alt =
                   activity.title ||
                   "안양 푸드뱅크 활동사진";
 
-
                 image.loading =
                   "lazy";
 
-
                 image.onerror =
                   function () {
-
 
                     if (
                       image.src.indexOf(
@@ -1623,11 +1330,9 @@ document.addEventListener(
 
                   };
 
-
                 imageWrap.appendChild(
                   image
                 );
-
 
 
                 const body =
@@ -1635,10 +1340,8 @@ document.addEventListener(
                     "div"
                   );
 
-
                 body.className =
                   "activity-body";
-
 
 
                 const date =
@@ -1646,15 +1349,12 @@ document.addEventListener(
                     "span"
                   );
 
-
                 date.className =
                   "activity-date";
-
 
                 date.textContent =
                   activity.activityDate ||
                   "";
-
 
 
                 const title =
@@ -1662,36 +1362,29 @@ document.addEventListener(
                     "h4"
                   );
 
-
                 title.className =
                   "activity-title";
-
 
                 title.textContent =
                   activity.title ||
                   "";
 
 
-
                 body.appendChild(
                   date
                 );
-
 
                 body.appendChild(
                   title
                 );
 
-
                 card.appendChild(
                   imageWrap
                 );
 
-
                 card.appendChild(
                   body
                 );
-
 
                 container.appendChild(
                   card
@@ -1706,7 +1399,6 @@ document.addEventListener(
     }
 
 
-
     /* ==========================================
        HELPER
     ========================================== */
@@ -1716,12 +1408,10 @@ document.addEventListener(
       value
     ) {
 
-
       const element =
         document.getElementById(
           elementId
         );
-
 
       if (element) {
 
@@ -1733,19 +1423,14 @@ document.addEventListener(
     }
 
 
-
     /* ==========================================
        START
     ========================================== */
 
     loadSiteSettings();
-
     loadBanners();
-
     loadNotices();
-
     loadActivities();
-
 
   }
 );
