@@ -2,20 +2,21 @@
 <html lang="ko">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-  <title>안양 푸드뱅크</title>
+  <title>안양 푸드뱅크 | 식품기부·이용안내·자원봉사</title>
 
   <meta name="description"
         content="안양 푸드뱅크 공식 홈페이지입니다. 식품기부, 이용안내, 자원봉사 및 지역사회 나눔 활동을 안내합니다.">
 
+  <meta name="theme-color"
+        content="#285a35">
+
   <link rel="stylesheet"
         href="style.css">
-
 </head>
 
 
@@ -99,7 +100,9 @@
 <main id="home">
 
 
-  <!-- MAIN HERO -->
+  <!-- ========================================
+       MAIN HERO
+  ========================================= -->
 
   <section class="hero">
 
@@ -112,7 +115,7 @@
         <article class="hero-slide active">
 
           <img src="images/common/main-banner.png"
-               alt="안양 푸드뱅크"
+               alt="안양 푸드뱅크 나눔 활동"
                class="hero-slide-image">
 
           <div class="hero-overlay"></div>
@@ -179,7 +182,46 @@
   </section>
 
 
-  <!-- NEWS -->
+
+  <!-- ========================================
+       MOBILE QUICK NAVIGATION
+  ========================================= -->
+
+  <nav class="mobile-quick-nav"
+       aria-label="빠른 메뉴">
+
+    <a href="#news">
+      <span class="mobile-quick-number">01</span>
+      <strong>소식</strong>
+    </a>
+
+    <a href="#guide">
+      <span class="mobile-quick-number">02</span>
+      <strong>이용안내</strong>
+    </a>
+
+    <a href="#donation">
+      <span class="mobile-quick-number">03</span>
+      <strong>기부</strong>
+    </a>
+
+    <a href="#volunteer">
+      <span class="mobile-quick-number">04</span>
+      <strong>봉사</strong>
+    </a>
+
+    <a href="#contact">
+      <span class="mobile-quick-number">05</span>
+      <strong>오시는 길</strong>
+    </a>
+
+  </nav>
+
+
+
+  <!-- ========================================
+       NEWS
+  ========================================= -->
 
   <section class="news-section"
            id="news">
@@ -267,7 +309,9 @@
 
 
 
-  <!-- QUICK -->
+  <!-- ========================================
+       QUICK GUIDE
+  ========================================= -->
 
   <section class="quick-section"
            id="guide">
@@ -294,15 +338,24 @@
         <a href="#guide"
            class="quick-card">
 
-          <div class="quick-icon">01</div>
+          <div class="quick-icon">
+            01
+          </div>
 
-          <h3>이용안내</h3>
+          <div class="quick-card-content">
 
-          <p>
-            푸드뱅크 이용 대상과 이용 방법을 안내합니다.
-          </p>
+            <h3>이용안내</h3>
 
-          <strong>자세히 보기 →</strong>
+            <p>
+              푸드뱅크 이용 대상과 이용 방법을 안내합니다.
+            </p>
+
+            <strong>
+              자세히 보기
+              <span aria-hidden="true">→</span>
+            </strong>
+
+          </div>
 
         </a>
 
@@ -310,15 +363,24 @@
         <a href="#donation"
            class="quick-card">
 
-          <div class="quick-icon">02</div>
+          <div class="quick-icon">
+            02
+          </div>
 
-          <h3>기부안내</h3>
+          <div class="quick-card-content">
 
-          <p>
-            식품과 생활용품으로 따뜻한 나눔에 참여하실 수 있습니다.
-          </p>
+            <h3>기부안내</h3>
 
-          <strong>자세히 보기 →</strong>
+            <p>
+              식품과 생활용품으로 따뜻한 나눔에 참여하실 수 있습니다.
+            </p>
+
+            <strong>
+              자세히 보기
+              <span aria-hidden="true">→</span>
+            </strong>
+
+          </div>
 
         </a>
 
@@ -326,15 +388,24 @@
         <a href="#volunteer"
            class="quick-card">
 
-          <div class="quick-icon">03</div>
+          <div class="quick-icon">
+            03
+          </div>
 
-          <h3>자원봉사</h3>
+          <div class="quick-card-content">
 
-          <p>
-            지역사회 나눔 활동에 함께 참여하실 수 있습니다.
-          </p>
+            <h3>자원봉사</h3>
 
-          <strong>자세히 보기 →</strong>
+            <p>
+              지역사회 나눔 활동에 함께 참여하실 수 있습니다.
+            </p>
+
+            <strong>
+              자세히 보기
+              <span aria-hidden="true">→</span>
+            </strong>
+
+          </div>
 
         </a>
 
@@ -346,14 +417,16 @@
 
 
 
-  <!-- ABOUT -->
+  <!-- ========================================
+       ABOUT
+  ========================================= -->
 
   <section class="about-section"
            id="about">
 
     <div class="container about-grid">
 
-      <div>
+      <div class="about-heading">
 
         <span class="section-label">
           ABOUT US
@@ -365,7 +438,7 @@
         </h2>
 
         <p id="operatingOrganization"
-           style="margin-top:18px; color:#686868;">
+           class="operating-organization">
           운영단체 : 안양여성자원봉사회
         </p>
 
@@ -393,9 +466,11 @@
 
 
 
-  <!-- HISTORY -->
+  <!-- ========================================
+       HISTORY
+  ========================================= -->
 
-  <section class="volunteer-section"
+  <section class="history-section"
            id="history">
 
     <div class="container">
@@ -404,7 +479,9 @@
 
         <span>HISTORY</span>
 
-        <h2>안양 푸드뱅크의 발자취</h2>
+        <h2>
+          안양 푸드뱅크의 발자취
+        </h2>
 
         <p>
           지역사회와 함께 이어온 나눔의 역사입니다.
@@ -413,45 +490,66 @@
       </div>
 
 
-      <div class="volunteer-box">
+      <div class="history-timeline">
 
-        <div class="volunteer-item">
+        <article class="history-item">
 
-          <strong>1984</strong>
+          <div class="history-marker"
+               aria-hidden="true"></div>
 
-          <h3>자원봉사활동 시작</h3>
+          <strong class="history-year">
+            1984
+          </strong>
+
+          <h3>
+            자원봉사활동 시작
+          </h3>
 
           <p id="history1984">
             인력은행에서 자원봉사활동 시작
           </p>
 
-        </div>
+        </article>
 
 
-        <div class="volunteer-item">
+        <article class="history-item">
 
-          <strong>2000</strong>
+          <div class="history-marker"
+               aria-hidden="true"></div>
 
-          <h3>안양여성자원봉사회</h3>
+          <strong class="history-year">
+            2000
+          </strong>
+
+          <h3>
+            안양여성자원봉사회
+          </h3>
 
           <p id="history2000">
             안양여성자원봉사회 창립 및 최초 등록
           </p>
 
-        </div>
+        </article>
 
 
-        <div class="volunteer-item">
+        <article class="history-item">
 
-          <strong>현재</strong>
+          <div class="history-marker"
+               aria-hidden="true"></div>
 
-          <h3>푸드뱅크 사업 운영</h3>
+          <strong class="history-year">
+            현재
+          </strong>
+
+          <h3>
+            푸드뱅크 사업 운영
+          </h3>
 
           <p id="historyFoodbank">
             안양시 푸드뱅크 사업을 지속적으로 운영하고 있습니다.
           </p>
 
-        </div>
+        </article>
 
       </div>
 
@@ -461,9 +559,11 @@
 
 
 
-  <!-- PERFORMANCE -->
+  <!-- ========================================
+       PERFORMANCE
+  ========================================= -->
 
-  <section class="business-section"
+  <section class="performance-section"
            id="performance">
 
     <div class="container">
@@ -472,7 +572,9 @@
 
         <span>OUR RECORD</span>
 
-        <h2>나눔 활동 실적</h2>
+        <h2>
+          나눔 활동 실적
+        </h2>
 
         <p>
           안양 푸드뱅크가 지역사회와 함께 만들어온 나눔의 기록입니다.
@@ -481,11 +583,11 @@
       </div>
 
 
-      <div class="business-grid">
+      <div class="performance-grid">
 
-        <article class="business-card">
+        <article class="performance-card">
 
-          <div class="business-number"
+          <div class="performance-label"
                id="annualYear">
             2025
           </div>
@@ -501,9 +603,9 @@
         </article>
 
 
-        <article class="business-card">
+        <article class="performance-card">
 
-          <div class="business-number">
+          <div class="performance-label">
             봉사인원
           </div>
 
@@ -518,9 +620,9 @@
         </article>
 
 
-        <article class="business-card">
+        <article class="performance-card">
 
-          <div class="business-number">
+          <div class="performance-label">
             봉사시간
           </div>
 
@@ -534,15 +636,10 @@
 
         </article>
 
-      </div>
 
+        <article class="performance-card performance-total">
 
-      <div class="business-grid"
-           style="margin-top:25px;">
-
-        <article class="business-card">
-
-          <div class="business-number"
+          <div class="performance-label"
                id="totalPeriod">
             1984~2025
           </div>
@@ -558,9 +655,9 @@
         </article>
 
 
-        <article class="business-card">
+        <article class="performance-card performance-total">
 
-          <div class="business-number">
+          <div class="performance-label">
             누계 봉사인원
           </div>
 
@@ -575,9 +672,9 @@
         </article>
 
 
-        <article class="business-card">
+        <article class="performance-card performance-total">
 
-          <div class="business-number">
+          <div class="performance-label">
             누계 봉사시간
           </div>
 
@@ -599,7 +696,9 @@
 
 
 
-  <!-- BUSINESS -->
+  <!-- ========================================
+       BUSINESS
+  ========================================= -->
 
   <section class="business-section"
            id="business">
@@ -610,7 +709,9 @@
 
         <span>OUR BUSINESS</span>
 
-        <h2>주요 사업</h2>
+        <h2>
+          주요 사업
+        </h2>
 
         <p>
           안양 푸드뱅크의 주요 나눔 활동을 소개합니다.
@@ -628,7 +729,9 @@
             01
           </div>
 
-          <h3>기부식품 제공사업</h3>
+          <h3>
+            기부식품 제공사업
+          </h3>
 
           <p>
             기부받은 식품과 생활용품을 필요한 이웃에게 전달합니다.
@@ -643,7 +746,9 @@
             02
           </div>
 
-          <h3>지역사회 나눔</h3>
+          <h3>
+            지역사회 나눔
+          </h3>
 
           <p>
             지역사회와 함께 다양한 나눔 활동을 진행합니다.
@@ -658,7 +763,9 @@
             03
           </div>
 
-          <h3>자원봉사 활동</h3>
+          <h3>
+            자원봉사 활동
+          </h3>
 
           <p>
             자원봉사자와 함께 따뜻한 지역사회를 만들어갑니다.
@@ -674,16 +781,20 @@
 
 
 
-  <!-- DONATION -->
+  <!-- ========================================
+       DONATION
+  ========================================= -->
 
   <section class="donation-section"
            id="donation">
 
     <div class="container donation-inner">
 
-      <div>
+      <div class="donation-copy">
 
-        <span>SHARE WITH US</span>
+        <span>
+          SHARE WITH US
+        </span>
 
         <h2>
           여러분의 나눔이<br>
@@ -709,7 +820,9 @@
 
 
 
-  <!-- VOLUNTEER -->
+  <!-- ========================================
+       VOLUNTEER
+  ========================================= -->
 
   <section class="volunteer-section"
            id="volunteer">
@@ -718,9 +831,13 @@
 
       <div class="section-heading">
 
-        <span>VOLUNTEER</span>
+        <span>
+          VOLUNTEER
+        </span>
 
-        <h2>자원봉사 안내</h2>
+        <h2>
+          자원봉사 안내
+        </h2>
 
         <p>
           따뜻한 나눔의 현장에 함께해 주세요.
@@ -733,9 +850,13 @@
 
         <div class="volunteer-item">
 
-          <strong>01</strong>
+          <strong>
+            01
+          </strong>
 
-          <h3>함께하는 봉사</h3>
+          <h3>
+            함께하는 봉사
+          </h3>
 
           <p>
             기부물품 정리, 포장, 배분 지원 등
@@ -747,9 +868,13 @@
 
         <div class="volunteer-item">
 
-          <strong>02</strong>
+          <strong>
+            02
+          </strong>
 
-          <h3>지역사회 나눔</h3>
+          <h3>
+            지역사회 나눔
+          </h3>
 
           <p>
             봉사를 통해 이웃과 나눔의
@@ -761,9 +886,13 @@
 
         <div class="volunteer-item">
 
-          <strong>03</strong>
+          <strong>
+            03
+          </strong>
 
-          <h3>봉사 문의</h3>
+          <h3>
+            봉사 문의
+          </h3>
 
           <p>
             참여를 원하시는 경우
@@ -780,7 +909,9 @@
 
 
 
-  <!-- CONTACT -->
+  <!-- ========================================
+       CONTACT
+  ========================================= -->
 
   <section class="contact-section"
            id="contact">
@@ -789,9 +920,13 @@
 
       <div class="section-heading">
 
-        <span>CONTACT</span>
+        <span>
+          CONTACT
+        </span>
 
-        <h2>오시는 길</h2>
+        <h2>
+          오시는 길
+        </h2>
 
         <p>
           안양 푸드뱅크를 찾아오시는 길입니다.
@@ -804,10 +939,11 @@
 
         <div class="contact-card">
 
-
           <div class="contact-row">
 
-            <strong>주소</strong>
+            <strong>
+              주소
+            </strong>
 
             <span id="siteAddress">
               경기도 안양시 동안구 평촌대로 389,
@@ -819,7 +955,9 @@
 
           <div class="contact-row">
 
-            <strong>전화</strong>
+            <strong>
+              전화
+            </strong>
 
             <a id="sitePhone"
                href="tel:0313811399">
@@ -832,7 +970,9 @@
           <div class="contact-row"
                id="faxRow">
 
-            <strong>FAX</strong>
+            <strong>
+              FAX
+            </strong>
 
             <span id="siteFax">
               031-385-4910
@@ -843,7 +983,9 @@
 
           <div class="contact-row">
 
-            <strong>이메일</strong>
+            <strong>
+              이메일
+            </strong>
 
             <a id="siteEmail"
                href="mailto:anywoman2017@naver.com">
@@ -856,7 +998,9 @@
           <div class="contact-row"
                id="hoursRow">
 
-            <strong>운영시간</strong>
+            <strong>
+              운영시간
+            </strong>
 
             <span id="siteHours">
               홈페이지에서 확인해 주세요.
@@ -864,10 +1008,34 @@
 
           </div>
 
+
+          <div class="contact-actions">
+
+            <a id="contactPhoneButton"
+               href="tel:0313811399"
+               class="contact-action contact-call">
+              전화 문의
+            </a>
+
+            <a id="contactMapButton"
+               href="https://naver.me/FetcD6nw"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="contact-action contact-map">
+              네이버지도
+            </a>
+
+          </div>
+
         </div>
 
 
         <div class="map-placeholder">
+
+          <div class="map-icon"
+               aria-hidden="true">
+            ●
+          </div>
 
           <strong>
             안양 푸드뱅크 위치
