@@ -1,1859 +1,1554 @@
-/*************************************************
- * 안양 푸드뱅크 홈페이지
- * main.js
- *************************************************/
+:root {
+  --orange: #ed8b18;
+  --orange-dark: #cf7110;
+  --orange-light: #fff5e7;
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function () {
+  --green: #397548;
+  --green-dark: #285a35;
+  --green-light: #edf5ef;
 
-    const API_URL =
-      "https://script.google.com/macros/s/AKfycby9PKtCQULkmmHtuPGgDzOxaSu3eqda7FZEDTN-j9DJww3ne9i-0iy6Xs6-RtN-rFfB/exec";
-
-    const FALLBACK_IMAGE =
-      "images/common/main-banner.png";
+  --cream: #faf8f3;
+  --white: #ffffff;
 
-    let siteSettings = {};
-    let heroItems = [];
-    let currentHeroIndex = 0;
-    let heroTimer = null;
+  --text: #242424;
+  --text-light: #686868;
 
+  --border: #e9e7e1;
 
-    /* ==========================================
-       MOBILE MENU
-    ========================================== */
+  --shadow: 0 14px 40px rgba(0, 0, 0, 0.06);
+}
 
-    const menuButton =
-      document.getElementById(
-        "menuButton"
-      );
 
-    const mobileNav =
-      document.getElementById(
-        "mobileNav"
-      );
+* {
+  box-sizing: border-box;
+}
 
-    if (
-      menuButton &&
-      mobileNav
-    ) {
 
-      menuButton.addEventListener(
-        "click",
-        function () {
-
-          const isOpen =
-            mobileNav
-              .classList
-              .toggle("active");
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
 
-          menuButton.setAttribute(
-            "aria-expanded",
-            String(isOpen)
-          );
 
-          menuButton.setAttribute(
-            "aria-label",
-            isOpen
-              ? "메뉴 닫기"
-              : "메뉴 열기"
-          );
+body {
+  margin: 0;
 
-        }
-      );
+  font-family:
+    "Pretendard",
+    "Noto Sans KR",
+    "Apple SD Gothic Neo",
+    Arial,
+    sans-serif;
 
+  color: var(--text);
+  background: var(--white);
 
-      mobileNav
-        .querySelectorAll("a")
-        .forEach(
-          function (link) {
+  line-height: 1.65;
+  word-break: keep-all;
+}
 
-            link.addEventListener(
-              "click",
-              function () {
 
-                mobileNav
-                  .classList
-                  .remove("active");
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
-                menuButton.setAttribute(
-                  "aria-expanded",
-                  "false"
-                );
 
-                menuButton.setAttribute(
-                  "aria-label",
-                  "메뉴 열기"
-                );
+img {
+  max-width: 100%;
+}
 
-              }
-            );
 
-          }
-        );
+button {
+  font: inherit;
+}
 
 
-      window.addEventListener(
-        "resize",
-        function () {
+.container {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+}
 
-          if (
-            window.innerWidth > 950
-          ) {
 
-            mobileNav
-              .classList
-              .remove("active");
 
-            menuButton.setAttribute(
-              "aria-expanded",
-              "false"
-            );
+/* =========================================
+   HEADER
+========================================= */
 
-          }
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 
-        }
-      );
+  background: rgba(255, 255, 255, 0.97);
+  border-bottom: 1px solid var(--border);
+}
 
-    }
 
+.header-inner {
+  max-width: 1180px;
+  min-height: 88px;
 
-    /* ==========================================
-       JSONP
-    ========================================== */
+  margin: 0 auto;
+  padding: 10px 20px;
 
-    function requestJsonp(
-      action,
-      callback
-    ) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-      const callbackName =
-        "anyangFoodbank_" +
-        action +
-        "_" +
-        Date.now() +
-        "_" +
-        Math.floor(
-          Math.random() * 100000
-        );
 
-      const script =
-        document.createElement(
-          "script"
-        );
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
 
-      let finished = false;
 
+.site-logo {
+  width: 64px;
+  height: 64px;
 
-      const timeout =
-        window.setTimeout(
-          function () {
+  display: block;
+  object-fit: contain;
+}
 
-            if (finished) {
-              return;
-            }
 
-            finished = true;
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
 
-            cleanup();
 
-            console.error(
-              action +
-              " API 응답 시간이 초과되었습니다."
-            );
+.brand-text strong {
+  color: var(--green-dark);
 
-            callback(null);
+  font-size: 19px;
+  line-height: 1.3;
 
-          },
-          10000
-        );
+  white-space: nowrap;
+}
 
 
-      function cleanup() {
+.brand-text span {
+  margin-top: 2px;
 
-        window.clearTimeout(
-          timeout
-        );
+  color: #888;
 
-        try {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
 
-          delete window[
-            callbackName
-          ];
 
-        } catch (error) {
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 27px;
+}
 
-          window[
-            callbackName
-          ] = undefined;
 
-        }
+.desktop-nav a {
+  position: relative;
 
-        if (
-          script.parentNode
-        ) {
+  padding: 12px 0;
 
-          script
-            .parentNode
-            .removeChild(
-              script
-            );
+  font-size: 15px;
+  font-weight: 700;
+}
 
-        }
 
-      }
+.desktop-nav a:hover {
+  color: var(--orange);
+}
 
 
-      window[
-        callbackName
-      ] =
-        function (result) {
+.desktop-nav a::after {
+  content: "";
 
-          if (finished) {
-            return;
-          }
+  position: absolute;
 
-          finished = true;
+  left: 0;
+  right: 0;
+  bottom: 5px;
 
-          cleanup();
+  height: 2px;
 
-          callback(result);
+  background: var(--orange);
 
-        };
+  transform: scaleX(0);
 
+  transition: transform 0.2s ease;
+}
 
-      script.onerror =
-        function () {
 
-          if (finished) {
-            return;
-          }
+.desktop-nav a:hover::after {
+  transform: scaleX(1);
+}
 
-          finished = true;
 
-          cleanup();
+.menu-button {
+  width: 44px;
+  height: 44px;
 
-          console.error(
-            action +
-            " API 호출에 실패했습니다."
-          );
+  display: none;
 
-          callback(null);
+  padding: 9px;
 
-        };
+  border: 0;
+  background: transparent;
 
+  cursor: pointer;
+}
 
-      script.src =
-        API_URL +
-        "?action=" +
-        encodeURIComponent(action) +
-        "&callback=" +
-        encodeURIComponent(
-          callbackName
-        ) +
-        "&t=" +
-        Date.now();
 
-      script.async = true;
+.menu-button span {
+  width: 100%;
+  height: 2px;
 
-      document.head
-        .appendChild(script);
+  display: block;
 
-    }
+  margin: 6px 0;
 
+  background: #333;
+}
 
-    /* ==========================================
-       SITE SETTINGS
-    ========================================== */
 
-    function loadSiteSettings() {
+.mobile-nav {
+  display: none;
+}
 
-      requestJsonp(
-        "siteSettings",
-        function (result) {
 
-          if (
-            !result ||
-            !result.success ||
-            !result.data
-          ) {
-            return;
-          }
 
-          siteSettings =
-            result.data;
+/* =========================================
+   HERO SLIDER
+========================================= */
 
-          applySiteSettings(
-            siteSettings
-          );
+.hero {
+  background: #1d251f;
+}
 
-        }
-      );
 
-    }
+.hero-slider {
+  position: relative;
 
+  width: 100%;
+  height: clamp(520px, 55vw, 700px);
 
-    function applySiteSettings(
-      settings
-    ) {
+  overflow: hidden;
 
-      if (
-        settings["기관명"]
-      ) {
+  background: #243126;
+}
 
-        setText(
-          "organizationName",
-          settings["기관명"]
-        );
 
-        setText(
-          "footerOrganizationName",
-          settings["기관명"]
-        );
+.hero-slides {
+  position: relative;
 
-        document.title =
-          settings["기관명"];
+  width: 100%;
+  height: 100%;
+}
 
-      }
 
+.hero-slide {
+  position: absolute;
+  inset: 0;
 
-      if (
-        settings["운영단체"]
-      ) {
+  opacity: 0;
+  visibility: hidden;
 
-        setText(
-          "operatingOrganization",
-          "운영단체 : " +
-          settings["운영단체"]
-        );
+  transition:
+    opacity 0.7s ease,
+    visibility 0.7s ease;
+}
 
-        setText(
-          "footerOperatingOrganization",
-          "운영단체 " +
-          settings["운영단체"]
-        );
 
-      }
+.hero-slide.active {
+  opacity: 1;
+  visibility: visible;
+}
 
 
-      if (
-        settings["대표문구"]
-      ) {
+.hero-slide-image {
+  width: 100%;
+  height: 100%;
 
-        setText(
-          "mainMessage",
-          settings["대표문구"]
-        );
+  display: block;
 
-      }
+  object-fit: cover;
+  object-position: center;
+}
 
 
-      if (
-        settings["설립목적"]
-      ) {
+.hero-overlay {
+  position: absolute;
+  inset: 0;
 
-        setText(
-          "organizationPurpose",
-          settings["설립목적"]
-        );
+  background:
+    linear-gradient(
+      90deg,
+      rgba(18, 27, 20, 0.76) 0%,
+      rgba(18, 27, 20, 0.50) 40%,
+      rgba(18, 27, 20, 0.10) 72%,
+      rgba(18, 27, 20, 0.08) 100%
+    );
+}
 
-      }
 
+.hero-content {
+  position: absolute;
 
-      if (
-        settings["연혁1984"]
-      ) {
+  z-index: 3;
 
-        setText(
-          "history1984",
-          settings["연혁1984"]
-        );
+  left: max(
+    40px,
+    calc((100% - 1180px) / 2)
+  );
 
-      }
+  top: 50%;
 
+  width: min(620px, calc(100% - 100px));
 
-      if (
-        settings["연혁2000"]
-      ) {
+  color: white;
 
-        setText(
-          "history2000",
-          settings["연혁2000"]
-        );
+  transform: translateY(-50%);
+}
 
-      }
 
+.hero-eyebrow {
+  margin: 0 0 13px;
 
-      if (
-        settings["연혁푸드뱅크"]
-      ) {
+  color: #ffc878;
 
-        setText(
-          "historyFoodbank",
-          settings["연혁푸드뱅크"]
-        );
+  font-size: 12px;
+  font-weight: 800;
 
-      }
+  letter-spacing: 2px;
+}
 
 
-      if (
-        settings["실적기준연도"]
-      ) {
+.hero-content h1 {
+  margin: 0 0 18px;
 
-        setText(
-          "annualYear",
-          settings["실적기준연도"]
-        );
+  font-size: clamp(38px, 4vw, 58px);
 
-      }
+  line-height: 1.2;
+  letter-spacing: -2px;
 
+  text-shadow:
+    0 2px 15px rgba(0, 0, 0, 0.25);
+}
 
-      if (
-        settings["연간봉사회수"]
-      ) {
 
-        setText(
-          "annualCount",
-          formatNumber(
-            settings["연간봉사회수"]
-          ) +
-          "회"
-        );
+.hero-text {
+  max-width: 560px;
 
-      }
+  margin: 0 0 30px;
 
+  color: rgba(255, 255, 255, 0.92);
 
-      if (
-        settings["연간봉사인원"]
-      ) {
+  font-size: 18px;
+}
 
-        setText(
-          "annualPeople",
-          formatNumber(
-            settings["연간봉사인원"]
-          ) +
-          "명"
-        );
 
-      }
+.hero-activity-title {
+  margin-top: 22px;
 
+  color: white;
 
-      if (
-        settings["연간봉사시간"]
-      ) {
+  font-size: 15px;
+  font-weight: 700;
+}
 
-        setText(
-          "annualHours",
-          formatNumber(
-            settings["연간봉사시간"]
-          ) +
-          "시간"
-        );
 
-      }
+.hero-activity-date {
+  margin-left: 8px;
 
+  color: rgba(255, 255, 255, 0.72);
 
-      if (
-        settings["누계기준기간"]
-      ) {
+  font-size: 13px;
+  font-weight: 400;
+}
 
-        setText(
-          "totalPeriod",
-          settings["누계기준기간"]
-        );
 
-      }
+.hero-buttons {
+  display: flex;
+  gap: 10px;
+}
 
 
-      if (
-        settings["누계봉사회수"]
-      ) {
+.button {
+  min-width: 145px;
 
-        setText(
-          "totalCount",
-          formatNumber(
-            settings["누계봉사회수"]
-          ) +
-          "회"
-        );
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-      }
+  padding: 14px 25px;
 
+  border-radius: 6px;
 
-      if (
-        settings["누계봉사인원"]
-      ) {
+  font-weight: 700;
 
-        setText(
-          "totalPeople",
-          formatNumber(
-            settings["누계봉사인원"]
-          ) +
-          "명"
-        );
+  transition:
+    transform 0.2s,
+    background 0.2s;
+}
 
-      }
 
+.button:hover {
+  transform: translateY(-2px);
+}
 
-      if (
-        settings["누계봉사시간"]
-      ) {
 
-        setText(
-          "totalHours",
-          formatNumber(
-            settings["누계봉사시간"]
-          ) +
-          "시간"
-        );
+.button-primary {
+  color: white;
+  background: var(--orange);
+}
 
-      }
 
+.button-primary:hover {
+  background: var(--orange-dark);
+}
 
-      if (
-        settings["주소"]
-      ) {
 
-        setText(
-          "siteAddress",
-          settings["주소"]
-        );
+.button-outline {
+  color: var(--orange-dark);
 
-        setText(
-          "mapAddress",
-          settings["주소"]
-        );
+  border: 1px solid var(--orange);
 
-      }
+  background: white;
+}
 
 
-      if (
-        settings["전화번호"]
-      ) {
+.hero-outline {
+  color: white;
 
-        const phone =
-          document.getElementById(
-            "sitePhone"
-          );
+  border: 1px solid rgba(255, 255, 255, 0.75);
 
-        if (phone) {
+  background: rgba(255, 255, 255, 0.10);
 
-          phone.textContent =
-            settings["전화번호"];
+  backdrop-filter: blur(5px);
+}
 
-          phone.href =
-            "tel:" +
-            settings["전화번호"]
-              .replace(
-                /[^0-9+]/g,
-                ""
-              );
 
-        }
+.hero-arrow {
+  position: absolute;
 
-      }
+  z-index: 5;
 
+  top: 50%;
 
-      const faxRow =
-        document.getElementById(
-          "faxRow"
-        );
+  width: 50px;
+  height: 50px;
 
-      if (
-        settings["팩스번호"]
-      ) {
+  border: 1px solid rgba(255, 255, 255, 0.40);
+  border-radius: 50%;
 
-        setText(
-          "siteFax",
-          settings["팩스번호"]
-        );
+  color: white;
+  background: rgba(0, 0, 0, 0.20);
 
-      } else if (
-        faxRow
-      ) {
+  font-size: 35px;
+  line-height: 1;
 
-        faxRow.style.display =
-          "none";
+  cursor: pointer;
 
-      }
+  transform: translateY(-50%);
 
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
 
-      if (
-        settings["이메일"]
-      ) {
 
-        const email =
-          document.getElementById(
-            "siteEmail"
-          );
+.hero-arrow:hover {
+  background: rgba(0, 0, 0, 0.48);
+  border-color: white;
+}
 
-        if (email) {
 
-          email.textContent =
-            settings["이메일"];
+.hero-prev {
+  left: 24px;
+}
 
-          email.href =
-            "mailto:" +
-            settings["이메일"];
 
-        }
+.hero-next {
+  right: 24px;
+}
 
-      }
 
+.hero-dots {
+  position: absolute;
 
-      const hoursRow =
-        document.getElementById(
-          "hoursRow"
-        );
+  z-index: 5;
 
-      if (
-        settings["운영시간"]
-      ) {
+  left: 50%;
+  bottom: 25px;
 
-        setText(
-          "siteHours",
-          settings["운영시간"]
-        );
+  display: flex;
+  gap: 9px;
 
-      } else if (
-        hoursRow
-      ) {
+  transform: translateX(-50%);
+}
 
-        hoursRow.style.display =
-          "none";
 
-      }
+.hero-dot {
+  width: 10px;
+  height: 10px;
 
+  padding: 0;
 
-      if (
-        settings["네이버지도URL"]
-      ) {
+  border: 1px solid white;
+  border-radius: 50%;
 
-        const mapLink =
-          document.getElementById(
-            "naverMapLink"
-          );
+  background: rgba(255, 255, 255, 0.30);
 
-        if (mapLink) {
+  cursor: pointer;
+}
 
-          mapLink.href =
-            settings["네이버지도URL"];
 
-        }
+.hero-dot.active {
+  background: white;
+}
 
-      }
 
-    }
 
+/* =========================================
+   SECTION COMMON
+========================================= */
 
-    /* ==========================================
-       BUSINESSES
-    ========================================== */
+.section-heading {
+  margin-bottom: 48px;
 
-    function loadBusinesses() {
+  text-align: center;
+}
 
-      requestJsonp(
-        "businesses",
-        function (result) {
 
-          if (
-            !result ||
-            !result.success ||
-            !Array.isArray(
-              result.data
-            )
-          ) {
-            return;
-          }
+.section-heading span,
+.section-label {
+  color: var(--orange);
 
+  font-size: 12px;
+  font-weight: 800;
 
-          const businesses =
-            result.data.filter(
-              function (business) {
-                return (
-                  business.mainVisible !== false
-                );
-              }
-            );
+  letter-spacing: 2px;
+}
 
 
-          if (
-            businesses.length === 0
-          ) {
-            return;
-          }
+.section-heading h2 {
+  margin: 8px 0 10px;
 
+  font-size: 36px;
+  line-height: 1.3;
 
-          renderBusinesses(
-            businesses
-          );
+  letter-spacing: -1px;
+}
 
-        }
-      );
 
-    }
+.section-heading p {
+  margin: 0;
 
+  color: var(--text-light);
+}
 
-    function renderBusinesses(
-      businesses
-    ) {
 
-      const container =
-        document.getElementById(
-          "businessList"
-        );
 
-      if (!container) {
-        return;
-      }
+/* =========================================
+   QUICK
+========================================= */
 
+.quick-section {
+  padding: 78px 0;
+}
 
-      container.innerHTML = "";
 
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 
-      businesses.forEach(
-        function (
-          business,
-          index
-        ) {
+  gap: 22px;
+}
 
-          const card =
-            document.createElement(
-              "article"
-            );
 
-          card.className =
-            "business-card";
+.quick-card {
+  min-height: 230px;
 
+  padding: 32px;
 
-          const number =
-            document.createElement(
-              "div"
-            );
+  border: 1px solid var(--border);
+  border-radius: 15px;
 
-          number.className =
-            "business-number";
+  background: white;
 
-          number.textContent =
-            business.number ||
-            String(
-              index + 1
-            ).padStart(
-              2,
-              "0"
-            );
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    border-color 0.2s;
+}
 
 
-          const title =
-            document.createElement(
-              "h3"
-            );
+.quick-card:hover {
+  transform: translateY(-5px);
 
-          title.textContent =
-            business.title ||
-            "";
+  border-color: #f3c98e;
 
+  box-shadow: var(--shadow);
+}
 
-          const description =
-            document.createElement(
-              "p"
-            );
 
-          description.textContent =
-            business.description ||
-            "";
+.quick-icon {
+  width: 42px;
+  height: 42px;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-          card.appendChild(
-            number
-          );
+  margin-bottom: 20px;
 
-          card.appendChild(
-            title
-          );
+  border-radius: 50%;
 
-          card.appendChild(
-            description
-          );
+  color: var(--orange);
+  background: var(--orange-light);
 
-          container.appendChild(
-            card
-          );
+  font-size: 13px;
+  font-weight: 800;
+}
 
-        }
-      );
 
-    }
+.quick-card h3 {
+  margin: 0 0 10px;
 
+  font-size: 23px;
+}
 
-    /* ==========================================
-       HERO BANNERS
-    ========================================== */
 
-    function loadBanners() {
+.quick-card p {
+  min-height: 55px;
 
-      requestJsonp(
-        "banners",
-        function (result) {
+  color: var(--text-light);
+}
 
-          if (
-            !result ||
-            !result.success ||
-            !Array.isArray(
-              result.data
-            ) ||
-            result.data.length === 0
-          ) {
 
-            setupFallbackHero();
-            return;
+.quick-card strong {
+  color: var(--orange);
 
-          }
+  font-size: 14px;
+}
 
-          heroItems =
-            result.data;
 
-          renderHeroSlides(
-            heroItems
-          );
 
-        }
-      );
+/* =========================================
+   ABOUT
+========================================= */
 
-    }
+.about-section {
+  padding: 82px 0;
 
+  background: var(--cream);
+}
 
-    function renderHeroSlides(
-      items
-    ) {
 
-      const container =
-        document.getElementById(
-          "heroSlides"
-        );
+.about-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
 
-      if (!container) {
-        return;
-      }
+  gap: 80px;
+}
 
-      container.innerHTML = "";
 
+.about-grid h2 {
+  margin: 10px 0 0;
 
-      items.forEach(
-        function (
-          item,
-          index
-        ) {
+  font-size: 42px;
+  line-height: 1.3;
 
-          const slide =
-            document.createElement(
-              "article"
-            );
+  letter-spacing: -1.5px;
+}
 
-          slide.className =
-            "hero-slide" +
-            (
-              index === 0
-                ? " active"
-                : ""
-            );
 
+.about-content {
+  color: var(--text-light);
 
-          const image =
-            document.createElement(
-              "img"
-            );
+  font-size: 18px;
+}
 
-          image.className =
-            "hero-slide-image";
 
-          image.src =
-            item.imageUrl ||
-            FALLBACK_IMAGE;
+.about-content p:first-child {
+  margin-top: 0;
+}
 
-          image.alt =
-            item.title ||
-            "안양 푸드뱅크 활동사진";
 
-          image.loading =
-            index === 0
-              ? "eager"
-              : "lazy";
 
+/* =========================================
+   BUSINESS
+========================================= */
 
-          image.onerror =
-            function () {
+.business-section {
+  padding: 84px 0;
+}
 
-              if (
-                image.src.indexOf(
-                  FALLBACK_IMAGE
-                ) === -1
-              ) {
 
-                image.src =
-                  FALLBACK_IMAGE;
+.business-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 
-              }
+  gap: 25px;
+}
 
-            };
 
+.business-card {
+  min-height: 230px;
 
-          const overlay =
-            document.createElement(
-              "div"
-            );
+  padding: 34px 30px;
 
-          overlay.className =
-            "hero-overlay";
+  border-top: 3px solid var(--orange);
 
+  background: var(--orange-light);
+}
 
-          const content =
-            document.createElement(
-              "div"
-            );
 
-          content.className =
-            "hero-content";
+.business-number {
+  color: var(--orange);
 
+  font-size: 13px;
+  font-weight: 800;
+}
 
-          const eyebrow =
-            document.createElement(
-              "p"
-            );
 
-          eyebrow.className =
-            "hero-eyebrow";
+.business-card h3 {
+  margin: 20px 0 12px;
 
-          eyebrow.textContent =
-            "ANYANG FOOD BANK";
+  font-size: 23px;
+}
 
 
-          const heading =
-            document.createElement(
-              "h1"
-            );
+.business-card p {
+  color: var(--text-light);
+}
 
-          heading.textContent =
-            siteSettings["대표문구"] ||
-            "당신의 작은 나눔이 따뜻한 안양을 만듭니다.";
 
 
-          const description =
-            document.createElement(
-              "p"
-            );
+/* =========================================
+   DONATION
+========================================= */
 
-          description.className =
-            "hero-text";
+.donation-section {
+  padding: 90px 0;
 
-          description.textContent =
-            "식품기부로 따뜻한 안양을 만들어주세요.";
+  color: white;
 
+  background: var(--green-dark);
+}
 
-          const buttons =
-            document.createElement(
-              "div"
-            );
 
-          buttons.className =
-            "hero-buttons";
+.donation-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-          buttons.innerHTML =
-            '<a href="#donation" class="button button-primary">기부 안내</a>' +
-            '<a href="#guide" class="button hero-outline">이용 안내</a>';
+  gap: 40px;
+}
 
 
-          const activityInfo =
-            document.createElement(
-              "div"
-            );
+.donation-section span {
+  color: #f4c27d;
 
-          activityInfo.className =
-            "hero-activity-title";
+  font-size: 12px;
+  font-weight: 800;
 
+  letter-spacing: 2px;
+}
 
-          const titleText =
-            document.createElement(
-              "span"
-            );
 
-          titleText.textContent =
-            item.title || "";
+.donation-section h2 {
+  margin: 10px 0;
 
-          activityInfo.appendChild(
-            titleText
-          );
+  font-size: 38px;
+  line-height: 1.35;
+}
 
 
-          if (
-            item.activityDate
-          ) {
+.donation-section p {
+  margin-bottom: 0;
 
-            const date =
-              document.createElement(
-                "span"
-              );
+  color: #dce8de;
+}
 
-            date.className =
-              "hero-activity-date";
 
-            date.textContent =
-              item.activityDate;
+.donation-button {
+  flex-shrink: 0;
 
-            activityInfo.appendChild(
-              date
-            );
+  color: var(--green-dark);
+  background: white;
+}
 
-          }
 
 
-          content.appendChild(
-            eyebrow
-          );
+/* =========================================
+   VOLUNTEER
+========================================= */
 
-          content.appendChild(
-            heading
-          );
+.volunteer-section {
+  padding: 82px 0;
 
-          content.appendChild(
-            description
-          );
+  background: #fafafa;
+}
 
-          content.appendChild(
-            buttons
-          );
 
+.volunteer-box {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 
-          if (
-            item.title
-          ) {
+  gap: 1px;
 
-            content.appendChild(
-              activityInfo
-            );
+  overflow: hidden;
 
-          }
+  border: 1px solid var(--border);
+  border-radius: 12px;
 
+  background: var(--border);
+}
 
-          slide.appendChild(
-            image
-          );
 
-          slide.appendChild(
-            overlay
-          );
+.volunteer-item {
+  padding: 36px;
 
-          slide.appendChild(
-            content
-          );
+  background: white;
+}
 
-          container.appendChild(
-            slide
-          );
 
-        }
-      );
+.volunteer-item strong {
+  color: var(--orange);
 
+  font-size: 13px;
+}
 
-      currentHeroIndex = 0;
 
-      createHeroDots(
-        items.length
-      );
+.volunteer-item h3 {
+  margin: 15px 0 8px;
 
-      updateHeroControls();
+  font-size: 20px;
+}
 
-      startHeroAutoPlay();
 
-    }
+.volunteer-item p {
+  margin-bottom: 0;
 
+  color: var(--text-light);
+}
 
-    function setupFallbackHero() {
 
-      heroItems = [
-        {
-          title: "",
-          activityDate: "",
-          imageUrl:
-            FALLBACK_IMAGE
-        }
-      ];
 
-      createHeroDots(1);
+/* =========================================
+   NEWS
+========================================= */
 
-      updateHeroControls();
+.news-section {
+  padding: 72px 0 76px;
+}
 
-    }
+.news-section .section-heading {
+  margin-bottom: 34px;
+}
 
+.news-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: 34px;
+  align-items: start;
+}
 
-    function createHeroDots(
-      count
-    ) {
+.notice-panel,
+.activity-panel {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
 
-      const dots =
-        document.getElementById(
-          "heroDots"
-        );
+.news-panel-header {
+  margin-bottom: 18px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #333;
+}
 
-      if (!dots) {
-        return;
-      }
+.news-panel-header span {
+  color: var(--orange);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
 
-      dots.innerHTML = "";
+.news-panel-header h3 {
+  margin: 4px 0 0;
+  font-size: 27px;
+  line-height: 1.3;
+}
 
+.notice-list {
+  border-top: 1px solid transparent;
+}
 
-      if (
-        count <= 1
-      ) {
+.notice-item {
+  display: block;
+  margin: 0 -12px;
+  padding: 20px 12px;
+  border-bottom: 1px solid var(--border);
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
 
-        dots.style.display =
-          "none";
+.notice-item:last-child {
+  border-bottom-color: transparent;
+}
 
-        return;
+.notice-item:hover {
+  background: var(--orange-light);
+}
 
-      }
+.notice-item:hover .notice-title {
+  color: var(--orange-dark);
+}
 
+.notice-date {
+  display: block;
+  margin-bottom: 6px;
+  color: #9a9a9a;
+  font-size: 12px;
+  font-weight: 500;
+}
 
-      dots.style.display =
-        "flex";
+.notice-title {
+  display: block;
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 750;
+  line-height: 1.45;
+  transition: color 0.2s ease;
+}
 
+.notice-content {
+  margin: 7px 0 0;
+  overflow: hidden;
+  color: var(--text-light);
+  font-size: 13px;
+  line-height: 1.65;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
 
-      for (
-        let i = 0;
-        i < count;
-        i++
-      ) {
+.activity-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
 
-        const dot =
-          document.createElement(
-            "button"
-          );
+.activity-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.035);
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+}
 
-        dot.type = "button";
+.activity-card:hover {
+  transform: translateY(-4px);
+  border-color: #f0cf9f;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+}
 
-        dot.className =
-          "hero-dot" +
-          (
-            i === 0
-              ? " active"
-              : ""
-          );
+.activity-image-wrap {
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: #f1efe9;
+}
 
-        dot.setAttribute(
-          "aria-label",
-          (i + 1) +
-          "번째 배너 보기"
-        );
+.activity-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.35s ease;
+}
 
+.activity-card:hover .activity-image {
+  transform: scale(1.045);
+}
 
-        dot.addEventListener(
-          "click",
-          function () {
+.activity-body {
+  padding: 17px 16px 19px;
+}
 
-            showHeroSlide(i);
+.activity-date {
+  display: block;
+  margin-bottom: 6px;
+  color: #999;
+  font-size: 12px;
+  font-weight: 500;
+}
 
-            restartHeroAutoPlay();
+.activity-title {
+  margin: 0;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.45;
+  letter-spacing: -0.2px;
+}
 
-          }
-        );
+.news-loading,
+.news-empty {
+  padding: 34px 8px;
+  color: #888;
+  text-align: center;
+}
 
 
-        dots.appendChild(dot);
+/* =========================================
+   CONTACT
+========================================= */
 
-      }
+.contact-section {
+  padding: 82px 0;
 
-    }
+  background: var(--cream);
+}
 
 
-    function showHeroSlide(
-      index
-    ) {
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 
-      const slides =
-        document.querySelectorAll(
-          ".hero-slide"
-        );
+  gap: 22px;
+}
 
-      const dots =
-        document.querySelectorAll(
-          ".hero-dot"
-        );
 
+.contact-card,
+.map-placeholder {
+  min-height: 300px;
 
-      if (
-        slides.length === 0
-      ) {
-        return;
-      }
+  padding: 36px;
 
+  border-radius: 12px;
 
-      if (
-        index < 0
-      ) {
+  background: white;
+}
 
-        index =
-          slides.length - 1;
 
-      }
+.contact-row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
 
+  padding: 18px 0;
 
-      if (
-        index >= slides.length
-      ) {
+  border-bottom: 1px solid var(--border);
+}
 
-        index = 0;
 
-      }
+.contact-row:first-child {
+  padding-top: 0;
+}
 
 
-      slides.forEach(
-        function (
-          slide,
-          slideIndex
-        ) {
+.contact-row:last-child {
+  border-bottom: 0;
+}
 
-          slide.classList.toggle(
-            "active",
-            slideIndex === index
-          );
 
-        }
-      );
+.contact-row strong {
+  color: var(--green-dark);
+}
 
 
-      dots.forEach(
-        function (
-          dot,
-          dotIndex
-        ) {
+.contact-row a:hover {
+  color: var(--orange);
+}
 
-          dot.classList.toggle(
-            "active",
-            dotIndex === index
-          );
 
-        }
-      );
+.map-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
+  color: #777;
 
-      currentHeroIndex =
-        index;
+  text-align: center;
 
-    }
+  background: #f1efe9;
+}
 
 
-    function updateHeroControls() {
+.map-placeholder strong {
+  color: #444;
 
-      const previous =
-        document.getElementById(
-          "heroPrev"
-        );
+  font-size: 20px;
+}
 
-      const next =
-        document.getElementById(
-          "heroNext"
-        );
 
-      const multiple =
-        heroItems.length > 1;
 
+/* =========================================
+   FOOTER
+========================================= */
 
-      if (previous) {
+.site-footer {
+  padding: 45px 0;
 
-        previous.style.display =
-          multiple
-            ? ""
-            : "none";
+  color: #d7ddd7;
 
-      }
+  background: #202520;
+}
 
 
-      if (next) {
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-        next.style.display =
-          multiple
-            ? ""
-            : "none";
+  gap: 30px;
+}
 
-      }
 
-    }
+.footer-brand {
+  display: flex;
+  align-items: center;
 
+  gap: 13px;
+}
 
-    function startHeroAutoPlay() {
 
-      stopHeroAutoPlay();
+.footer-logo {
+  width: 50px;
+  height: 50px;
 
+  object-fit: contain;
 
-      if (
-        heroItems.length <= 1
-      ) {
-        return;
-      }
+  background: white;
 
+  border-radius: 50%;
+}
 
-      if (
-        window.matchMedia(
-          "(prefers-reduced-motion: reduce)"
-        ).matches
-      ) {
-        return;
-      }
 
+.footer-brand strong {
+  color: white;
 
-      heroTimer =
-        window.setInterval(
-          function () {
+  font-size: 18px;
+}
 
-            showHeroSlide(
-              currentHeroIndex + 1
-            );
 
-          },
-          5000
-        );
+.footer-brand p {
+  margin: 3px 0 0;
 
-    }
+  font-size: 13px;
+}
 
 
-    function stopHeroAutoPlay() {
+.copyright {
+  color: #949b94;
 
-      if (
-        heroTimer
-      ) {
+  font-size: 12px;
 
-        window.clearInterval(
-          heroTimer
-        );
+  text-align: right;
+}
 
-        heroTimer = null;
 
-      }
 
-    }
+/* =========================================
+   TABLET
+========================================= */
 
+@media (max-width: 950px) {
 
-    function restartHeroAutoPlay() {
-
-      stopHeroAutoPlay();
-      startHeroAutoPlay();
-
-    }
-
-
-    const heroPrev =
-      document.getElementById(
-        "heroPrev"
-      );
-
-    const heroNext =
-      document.getElementById(
-        "heroNext"
-      );
-
-
-    if (heroPrev) {
-
-      heroPrev.addEventListener(
-        "click",
-        function () {
-
-          showHeroSlide(
-            currentHeroIndex - 1
-          );
-
-          restartHeroAutoPlay();
-
-        }
-      );
-
-    }
-
-
-    if (heroNext) {
-
-      heroNext.addEventListener(
-        "click",
-        function () {
-
-          showHeroSlide(
-            currentHeroIndex + 1
-          );
-
-          restartHeroAutoPlay();
-
-        }
-      );
-
-    }
-
-
-    const heroSlider =
-      document.getElementById(
-        "heroSlider"
-      );
-
-
-    if (heroSlider) {
-
-      heroSlider.addEventListener(
-        "mouseenter",
-        stopHeroAutoPlay
-      );
-
-      heroSlider.addEventListener(
-        "mouseleave",
-        startHeroAutoPlay
-      );
-
-
-      let touchStartX = 0;
-
-
-      heroSlider.addEventListener(
-        "touchstart",
-        function (event) {
-
-          touchStartX =
-            event.changedTouches[0]
-              .screenX;
-
-        },
-        {
-          passive: true
-        }
-      );
-
-
-      heroSlider.addEventListener(
-        "touchend",
-        function (event) {
-
-          const touchEndX =
-            event.changedTouches[0]
-              .screenX;
-
-          const difference =
-            touchStartX -
-            touchEndX;
-
-
-          if (
-            Math.abs(
-              difference
-            ) < 50
-          ) {
-            return;
-          }
-
-
-          if (
-            difference > 0
-          ) {
-
-            showHeroSlide(
-              currentHeroIndex + 1
-            );
-
-          } else {
-
-            showHeroSlide(
-              currentHeroIndex - 1
-            );
-
-          }
-
-
-          restartHeroAutoPlay();
-
-        },
-        {
-          passive: true
-        }
-      );
-
-    }
-
-
-    /* ==========================================
-       NOTICES
-    ========================================== */
-
-    function loadNotices() {
-
-      requestJsonp(
-        "notices",
-        function (result) {
-
-          const container =
-            document.getElementById(
-              "noticeList"
-            );
-
-
-          if (!container) {
-            return;
-          }
-
-
-          if (
-            !result ||
-            !result.success ||
-            !Array.isArray(
-              result.data
-            ) ||
-            result.data.length === 0
-          ) {
-
-            container.innerHTML =
-              '<div class="news-empty">등록된 공지사항이 없습니다.</div>';
-
-            return;
-
-          }
-
-
-          container.innerHTML = "";
-
-
-          result.data
-            .slice(
-              0,
-              3
-            )
-            .forEach(
-              function (notice) {
-
-                const item =
-                  document.createElement(
-                    notice.attachmentUrl
-                      ? "a"
-                      : "div"
-                  );
-
-                item.className =
-                  "notice-item";
-
-
-                if (
-                  notice.attachmentUrl
-                ) {
-
-                  item.href =
-                    notice.attachmentUrl;
-
-                  item.target =
-                    "_blank";
-
-                  item.rel =
-                    "noopener noreferrer";
-
-                }
-
-
-                const date =
-                  document.createElement(
-                    "span"
-                  );
-
-                date.className =
-                  "notice-date";
-
-                date.textContent =
-                  notice.date || "";
-
-
-                const title =
-                  document.createElement(
-                    "strong"
-                  );
-
-                title.className =
-                  "notice-title";
-
-                title.textContent =
-                  notice.title || "";
-
-
-                item.appendChild(date);
-
-                item.appendChild(title);
-
-
-                if (
-                  notice.content
-                ) {
-
-                  const content =
-                    document.createElement(
-                      "p"
-                    );
-
-                  content.className =
-                    "notice-content";
-
-                  content.textContent =
-                    notice.content;
-
-                  item.appendChild(
-                    content
-                  );
-
-                }
-
-
-                container.appendChild(
-                  item
-                );
-
-              }
-            );
-
-        }
-      );
-
-    }
-
-
-    /* ==========================================
-       ACTIVITIES
-    ========================================== */
-
-    function loadActivities() {
-
-      requestJsonp(
-        "activities",
-        function (result) {
-
-          const container =
-            document.getElementById(
-              "activityList"
-            );
-
-
-          if (!container) {
-            return;
-          }
-
-
-          if (
-            !result ||
-            !result.success ||
-            !Array.isArray(
-              result.data
-            ) ||
-            result.data.length === 0
-          ) {
-
-            container.innerHTML =
-              '<div class="news-empty">등록된 활동소식이 없습니다.</div>';
-
-            return;
-
-          }
-
-
-          container.innerHTML = "";
-
-
-          result.data
-            .slice(
-              0,
-              3
-            )
-            .forEach(
-              function (activity) {
-
-                const card =
-                  document.createElement(
-                    "article"
-                  );
-
-                card.className =
-                  "activity-card";
-
-
-                const imageWrap =
-                  document.createElement(
-                    "div"
-                  );
-
-                imageWrap.className =
-                  "activity-image-wrap";
-
-
-                const image =
-                  document.createElement(
-                    "img"
-                  );
-
-                image.className =
-                  "activity-image";
-
-                image.src =
-                  activity.imageUrl ||
-                  FALLBACK_IMAGE;
-
-                image.alt =
-                  activity.title ||
-                  "안양 푸드뱅크 활동사진";
-
-                image.loading =
-                  "lazy";
-
-
-                image.onerror =
-                  function () {
-
-                    if (
-                      image.src.indexOf(
-                        FALLBACK_IMAGE
-                      ) === -1
-                    ) {
-
-                      image.src =
-                        FALLBACK_IMAGE;
-
-                    }
-
-                  };
-
-
-                imageWrap.appendChild(
-                  image
-                );
-
-
-                const body =
-                  document.createElement(
-                    "div"
-                  );
-
-                body.className =
-                  "activity-body";
-
-
-                const date =
-                  document.createElement(
-                    "span"
-                  );
-
-                date.className =
-                  "activity-date";
-
-                date.textContent =
-                  activity.activityDate ||
-                  "";
-
-
-                const title =
-                  document.createElement(
-                    "h4"
-                  );
-
-                title.className =
-                  "activity-title";
-
-                title.textContent =
-                  activity.title ||
-                  "";
-
-
-                body.appendChild(date);
-
-                body.appendChild(title);
-
-                card.appendChild(
-                  imageWrap
-                );
-
-                card.appendChild(
-                  body
-                );
-
-                container.appendChild(
-                  card
-                );
-
-              }
-            );
-
-        }
-      );
-
-    }
-
-
-    /* ==========================================
-       HELPERS
-    ========================================== */
-
-    function setText(
-      elementId,
-      value
-    ) {
-
-      const element =
-        document.getElementById(
-          elementId
-        );
-
-      if (element) {
-
-        element.textContent =
-          value;
-
-      }
-
-    }
-
-
-    function formatNumber(
-      value
-    ) {
-
-      const cleaned =
-        String(value)
-          .replace(
-            /,/g,
-            ""
-          )
-          .trim();
-
-      const number =
-        Number(cleaned);
-
-
-      if (
-        Number.isNaN(number)
-      ) {
-
-        return value;
-
-      }
-
-
-      return number
-        .toLocaleString(
-          "ko-KR"
-        );
-
-    }
-
-
-    /* ==========================================
-       START
-    ========================================== */
-
-    loadSiteSettings();
-
-    loadBusinesses();
-
-    loadBanners();
-
-    loadNotices();
-
-    loadActivities();
-
+  .desktop-nav {
+    display: none;
   }
-);
+
+
+  .menu-button {
+    display: block;
+  }
+
+
+  .mobile-nav.active {
+    display: flex;
+    flex-direction: column;
+
+    padding: 5px 20px 20px;
+
+    background: white;
+  }
+
+
+  .mobile-nav a {
+    padding: 13px 5px;
+
+    border-bottom: 1px solid var(--border);
+
+    font-weight: 600;
+  }
+
+
+  .mobile-nav a:last-child {
+    border-bottom: 0;
+  }
+
+
+  .quick-grid,
+  .business-grid,
+  .volunteer-box {
+    grid-template-columns: 1fr;
+  }
+
+
+  .quick-card {
+    min-height: auto;
+  }
+
+
+  .about-grid {
+    grid-template-columns: 1fr;
+
+    gap: 25px;
+  }
+
+
+  .donation-inner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+
+  .news-layout {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+
+  .activity-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .hero-slider {
+    height: 600px;
+  }
+
+
+  .hero-slide-image {
+    object-position: center;
+  }
+
+
+  .hero-overlay {
+    background:
+      linear-gradient(
+        0deg,
+        rgba(17, 26, 19, 0.82) 0%,
+        rgba(17, 26, 19, 0.48) 55%,
+        rgba(17, 26, 19, 0.18) 100%
+      );
+  }
+
+
+  .hero-content {
+    left: 22px;
+    right: 22px;
+    top: auto;
+    bottom: 75px;
+
+    width: auto;
+
+    transform: none;
+  }
+
+
+  .hero-content h1 {
+    font-size: 37px;
+    letter-spacing: -1.5px;
+  }
+
+
+  .hero-text {
+    font-size: 16px;
+  }
+
+
+  .hero-arrow {
+    width: 42px;
+    height: 42px;
+
+    font-size: 29px;
+  }
+
+
+  .hero-prev {
+    left: 12px;
+  }
+
+
+  .hero-next {
+    right: 12px;
+  }
+
+
+  .hero-buttons {
+    max-width: 360px;
+  }
+
+
+  .activity-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+
+@media (max-width: 600px) {
+
+  html {
+    scroll-padding-top: 70px;
+  }
+
+
+  .container {
+    width: calc(100% - 30px);
+  }
+
+
+  .header-inner {
+    min-height: 70px;
+
+    padding: 7px 15px;
+  }
+
+
+  .site-logo {
+    width: 48px;
+    height: 48px;
+  }
+
+
+  .brand {
+    gap: 9px;
+  }
+
+
+  .brand-text strong {
+    font-size: 16px;
+  }
+
+
+  .brand-text span {
+    font-size: 8px;
+  }
+
+
+  .hero-slider {
+    height: 570px;
+  }
+
+
+  .hero-content {
+    bottom: 70px;
+  }
+
+
+  .hero-content h1 {
+    font-size: 32px;
+  }
+
+
+  .hero-text {
+    margin-bottom: 22px;
+  }
+
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+
+  .button {
+    width: 100%;
+  }
+
+
+  .hero-arrow {
+    display: none;
+  }
+
+
+  .quick-section,
+  .about-section,
+  .business-section,
+  .volunteer-section,
+  .news-section,
+  .contact-section {
+    padding: 60px 0;
+  }
+
+
+  .section-heading {
+    margin-bottom: 34px;
+  }
+
+
+  .section-heading h2 {
+    font-size: 29px;
+  }
+
+
+  .quick-card {
+    padding: 28px;
+  }
+
+
+  .quick-card p {
+    min-height: auto;
+  }
+
+
+  .about-grid h2 {
+    font-size: 32px;
+  }
+
+
+  .about-content {
+    font-size: 16px;
+  }
+
+
+  .business-card {
+    min-height: auto;
+
+    padding: 30px 27px;
+  }
+
+
+  .donation-section {
+    padding: 70px 0;
+  }
+
+
+  .donation-section h2 {
+    font-size: 30px;
+  }
+
+
+  .volunteer-item {
+    padding: 28px;
+  }
+
+
+  .news-section {
+    padding: 56px 0 60px;
+  }
+
+
+  .news-section .section-heading {
+    margin-bottom: 30px;
+  }
+
+
+  .news-layout {
+    gap: 38px;
+  }
+
+
+  .notice-panel,
+  .activity-panel {
+    padding: 0;
+  }
+
+
+  .news-panel-header h3 {
+    font-size: 24px;
+  }
+
+
+  .notice-item {
+    margin: 0 -8px;
+    padding: 18px 8px;
+  }
+
+
+  .activity-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+
+  .contact-card,
+  .map-placeholder {
+    min-height: auto;
+
+    padding: 25px;
+  }
+
+
+  .contact-row {
+    grid-template-columns: 1fr;
+
+    gap: 5px;
+  }
+
+
+  .map-placeholder {
+    min-height: 200px;
+  }
+
+
+  .footer-inner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+
+  .copyright {
+    text-align: left;
+  }
+
+}
+
+
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+}
